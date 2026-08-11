@@ -148,6 +148,13 @@ body {
   }
 }
 
+/* Faixa rotativa (marquee) */
+@keyframes faixa {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Revelação no scroll */
 .reveal {
   opacity: 0;

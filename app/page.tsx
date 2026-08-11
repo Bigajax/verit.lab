@@ -122,6 +122,36 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Faixa rotativa — taglines do catálogo ───────────────── */}
+      <div
+        aria-hidden
+        className="relative mt-14 -rotate-1 overflow-hidden bg-rosa py-3 lg:mt-0"
+        style={{ width: "104%", marginLeft: "-2%" }}
+      >
+        <div className="flex w-max animate-[faixa_32s_linear_infinite] motion-reduce:animate-none">
+          {[0, 1].map((k) => (
+            <p
+              key={k}
+              className="flex shrink-0 items-center text-sm font-bold uppercase tracking-[0.2em] text-preto"
+            >
+              {[
+                "nothing repeat.",
+                "this is not just decor.",
+                "made to be noticed.",
+                "your wall deserves attitude.",
+                "art doesn't need permission.",
+                "one piece. new energy.",
+              ].map((frase) => (
+                <span key={frase} className="flex items-center">
+                  <span className="px-5">{frase}</span>
+                  <span aria-hidden>/</span>
+                </span>
+              ))}
+            </p>
+          ))}
+        </div>
+      </div>
+
       {/* ── 02. Galeria — peças únicas ──────────────────────────── */}
       <section id="pecas" className="scroll-mt-10 px-5 pt-24 sm:px-12 lg:px-20 lg:pt-36">
         <div className="gap-12 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
