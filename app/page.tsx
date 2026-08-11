@@ -120,7 +120,7 @@ export default function Home() {
             <a
               href="#pecas"
               aria-label="Descer para a galeria"
-              className="mt-12 hidden h-11 w-11 items-center justify-center rounded-full border border-osso/30 text-osso/60 transition-colors hover:border-ambar hover:text-ambar lg:inline-flex"
+              className="mt-12 hidden h-11 w-11 items-center justify-center rounded-full border border-osso/30 text-osso/60 transition-colors [animation:flutuar_2.6s_ease-in-out_infinite] hover:border-ambar hover:text-ambar motion-reduce:animate-none lg:inline-flex"
             >
               ↓
             </a>
@@ -196,7 +196,7 @@ export default function Home() {
               {pecas.map((peca, i) => (
                 <div key={peca.slug} className="mb-6 break-inside-avoid">
                   <Reveal>
-                    <article className="group border border-ouro/25 bg-osso/[0.03]">
+                    <article className="group border border-ouro/25 bg-osso/[0.03] transition-colors duration-300 hover:border-ambar/70">
                       <div className={`relative overflow-hidden ${RITMO[i % RITMO.length]}`}>
                         <Image
                           src={peca.foto}
@@ -446,7 +446,7 @@ export default function Home() {
                 href={site.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block"
+                className="group block"
               >
                 <div className="relative aspect-[3/4] w-full overflow-hidden">
                   <Image
@@ -454,8 +454,13 @@ export default function Home() {
                     alt={foto.alt}
                     fill
                     sizes="(min-width: 1024px) 22vw, 45vw"
-                    className="object-cover transition-transform duration-500 hover:scale-[1.03]"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-preto/85 via-transparent to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="eyebrow text-osso">
+                      {site.instagramHandle} →
+                    </span>
+                  </div>
                 </div>
               </a>
             </Reveal>
@@ -467,10 +472,13 @@ export default function Home() {
       <section className="px-5 pb-24 sm:px-12 lg:px-20">
         <div className="border-t border-ouro/25 pt-16 lg:grid lg:grid-cols-2 lg:gap-16">
           <div>
-            <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl">
-              Encontrou <em className="text-ambar">a sua?</em>
+            <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
+              <span className="block text-5xl sm:text-6xl">Encontrou</span>
+              <span className="font-marker block -rotate-1 pt-2 text-4xl font-normal normal-case tracking-normal text-ambar sm:text-5xl">
+                a sua?
+              </span>
             </h2>
-            <p className="mt-4 text-osso/70">Peça única. Uma vez só.</p>
+            <p className="mt-5 text-osso/70">Peça única. Uma vez só.</p>
             <div className="mt-9 flex flex-wrap gap-4">
               <Cta cta="final-whatsapp" href={waGeral()} novaAba className="btn-ambar">
                 Quero a minha
@@ -514,9 +522,10 @@ export default function Home() {
         <div className="flex flex-wrap items-end justify-between gap-8 px-5 py-14 sm:px-12 lg:px-20">
           <div>
             <p className="font-display text-4xl italic">vérít.lab</p>
-            <p className="eyebrow mt-3 text-osso/40">
-              {site.cidade} · nothing repeats
+            <p className="font-marker mt-2 -rotate-1 text-xl text-rosa">
+              nothing repeat.
             </p>
+            <p className="eyebrow mt-3 text-osso/40">{site.cidade} · PR</p>
           </div>
           <nav className="flex gap-8">
             <a

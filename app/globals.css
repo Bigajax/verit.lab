@@ -176,6 +176,17 @@ body {
   }
 }
 
+/* Flutuação sutil da seta de scroll */
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
 /* Revelação no scroll */
 .reveal {
   opacity: 0;
