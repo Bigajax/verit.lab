@@ -60,16 +60,16 @@ export default function Home() {
           />
         </div>
 
-        {/* tinta âmbar escorrendo do topo (blend screen: o preto da textura some) */}
+        {/* tinta escorrendo do topo — cor original da textura, fundo transparente por alfa */}
         <div
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 z-0 hidden w-[44%] opacity-60 mix-blend-screen lg:block"
+          className="pointer-events-none absolute left-0 top-0 z-0 hidden w-[44%] opacity-50 lg:block"
         >
           <Image
-            src="/images/deco/tinta-drip.jpg"
+            src="/images/deco/tinta-cor.png"
             alt=""
-            width={1536}
-            height={1024}
+            width={1280}
+            height={853}
             priority
             className="h-auto w-full [mask-image:radial-gradient(130%_130%_at_0%_0%,black_55%,transparent_80%)]"
           />
