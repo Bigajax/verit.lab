@@ -26,8 +26,14 @@ export default function Home() {
       <section className="relative flex flex-col lg:min-h-[94vh]">
         <header className="relative z-20 flex w-full items-center justify-between px-5 pt-6 sm:px-12 lg:px-20">
           <p className="font-display text-2xl italic">vérít.lab</p>
-          <p className="eyebrow hidden md:block">
-            Contemporary design lab · {site.cidade}
+          <p className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex">
+            <span>Art</span>
+            <span className="text-ambar">/</span>
+            <span>Mirrors</span>
+            <span className="text-ambar">/</span>
+            <span>Objects</span>
+            <span className="text-ambar">·</span>
+            <span>{site.cidade}</span>
           </p>
           <a
             href={site.instagram}
