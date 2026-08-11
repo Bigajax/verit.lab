@@ -24,7 +24,7 @@ export default function Home() {
 
       {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
       <section className="relative flex flex-col lg:min-h-[94vh]">
-        <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between px-5 pt-6 sm:px-8">
+        <header className="relative z-20 flex w-full items-center justify-between px-5 pt-6 sm:px-10">
           <p className="font-display text-2xl italic">vérít.lab</p>
           <p className="eyebrow hidden md:block">
             Contemporary design lab · {site.cidade}
@@ -75,7 +75,7 @@ export default function Home() {
           />
         </div>
 
-        <div className="relative z-10 order-1 mx-auto w-full max-w-7xl flex-1 px-5 pt-12 sm:px-8 lg:order-none lg:flex lg:flex-col lg:justify-center lg:pt-0">
+        <div className="relative z-10 order-1 w-full flex-1 px-5 pt-12 sm:px-10 lg:order-none lg:flex lg:flex-col lg:justify-center lg:pt-0">
           <div className="lg:max-w-[46%]">
             <h1 className="font-extrabold uppercase leading-[0.88] tracking-tight">
               <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Nada</span>
@@ -123,7 +123,7 @@ export default function Home() {
       </section>
 
       {/* ── 02. Galeria — peças únicas ──────────────────────────── */}
-      <section id="pecas" className="mx-auto max-w-7xl scroll-mt-10 px-5 pt-24 sm:px-8 lg:pt-36">
+      <section id="pecas" className="scroll-mt-10 px-5 pt-24 sm:px-10 lg:pt-36">
         <div className="gap-12 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
           {/* trilho esquerdo */}
           <div className="mb-14 lg:sticky lg:top-16 lg:mb-0 lg:self-start">
@@ -233,7 +233,7 @@ export default function Home() {
       </section>
 
       {/* ── 03. NOTHING REPEAT — o conceito ─────────────────────── */}
-      <section className="relative mx-auto max-w-6xl px-5 py-28 sm:px-8 lg:py-40">
+      <section className="relative px-5 py-28 sm:px-10 lg:py-40">
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <div className="relative z-10 lg:col-span-7">
             <h2 className="font-marker -rotate-1 text-[15vw] leading-[1.05] text-ambar sm:text-7xl lg:text-8xl">
@@ -297,7 +297,7 @@ export default function Home() {
         id="encomenda"
         className="scroll-mt-10 border-y border-ouro/25 bg-osso/[0.03]"
       >
-        <div className="mx-auto grid max-w-6xl gap-14 px-5 py-24 sm:px-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        <div className="grid gap-14 px-5 py-24 sm:px-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
           <div>
             <p className="eyebrow mb-4">Peças sob encomenda</p>
             <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl">
@@ -333,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* ── 05. Essência — curta ────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-5 py-24 sm:px-8 lg:py-32">
+      <section className="px-5 py-24 sm:px-10 lg:py-32">
         <Reveal>
           <div className="max-w-2xl border-l border-ouro/40 pl-6 sm:pl-10">
             <p className="eyebrow mb-6">Sobre a vérít</p>
@@ -350,7 +350,7 @@ export default function Home() {
       </section>
 
       {/* ── 06. Instagram — o laboratório ───────────────────────── */}
-      <section className="mx-auto max-w-6xl px-5 pb-24 sm:px-8 lg:pb-32">
+      <section className="px-5 pb-24 sm:px-10 lg:pb-32">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="eyebrow mb-4">O laboratório</p>
@@ -413,7 +413,7 @@ export default function Home() {
       </section>
 
       {/* ── 07. CTA final + FAQ ─────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-5 pb-24 sm:px-8">
+      <section className="px-5 pb-24 sm:px-10">
         <div className="border-t border-ouro/25 pt-16 lg:grid lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl">
@@ -460,7 +460,7 @@ export default function Home() {
 
       {/* ── 08. Footer ──────────────────────────────────────────── */}
       <footer className="border-t border-ouro/25">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-8 px-5 py-14 sm:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-8 px-5 py-14 sm:px-10">
           <div>
             <p className="font-display text-4xl italic">vérít.lab</p>
             <p className="eyebrow mt-3 text-osso/40">
