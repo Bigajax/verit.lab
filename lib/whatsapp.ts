@@ -5,14 +5,28 @@ export function waLink(mensagem: string) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-// Toda mensagem identifica a origem (vitrine) e o que gerou o contato.
+// As mensagens usam a voz da vérít ("nada se repete") e a formatação do
+// WhatsApp (*asteriscos* viram negrito). Toda mensagem identifica a origem.
 export const waGeral = () =>
   waLink(
-    "Oi! Cheguei pela galeria online da vérít.lab e quero conhecer as peças disponíveis.",
+    [
+      "Oi, vérít! 🖤",
+      "Vim pela galeria online e quero conhecer as peças que ainda estão disponíveis.",
+    ].join("\n"),
   );
 
-export const waPeca = (peca: Peca) =>
-  waLink(`Oi! Vi a peça ${peca.nome} na vitrine e quero saber mais.`);
+export const waPeca = (peca: Peca) => {
+  const linhas = [
+    "Oi, vérít! 🖤",
+    "Vi essa peça na galeria e, como nada aí se repete, quero garantir a minha:",
+    "",
+    `*${peca.nome}*`,
+    `${peca.tipo} · ${peca.medida}`,
+  ];
+  if (peca.preco) linhas.push(`R$ ${peca.preco.toLocaleString("pt-BR")}`);
+  linhas.push("", "Ela ainda está disponível?");
+  return waLink(linhas.join("\n"));
+};
 
 export type Encomenda = {
   tipo: string;
@@ -25,13 +39,23 @@ export type Encomenda = {
 
 export function waEncomenda(e: Encomenda) {
   const linhas = [
-    "Oi! Quero encomendar uma peça única. (vitrine · encomenda)",
+    "Oi, vérít! 🖤",
+    "Preenchi a ficha na galeria — quero uma peça única, feita pra mim:",
     "",
-    `Tipo de peça: ${e.tipo}`,
-    `Frase ou ideia: ${e.ideia}`,
-    `Onde vai ficar: ${e.local}`,
+    "*Ficha de encomenda*",
+    `✦ Tipo de peça: ${e.tipo}`,
+    `✦ Frase ou ideia: ${e.ideia}`,
+    `✦ Onde vai ficar: ${e.local}`,
   ];
-  if (e.inspiracao.trim()) linhas.push(`Peça que inspirou: ${e.inspiracao}`);
-  linhas.push("", `Nome: ${e.nome}`, `WhatsApp: ${e.whatsapp}`);
+  if (e.inspiracao.trim())
+    linhas.push(`✦ Peça que inspirou: ${e.inspiracao}`);
+  linhas.push(
+    "",
+    "*Contato*",
+    `✦ Nome: ${e.nome}`,
+    `✦ WhatsApp: ${e.whatsapp}`,
+    "",
+    "Bora criar a minha?",
+  );
   return waLink(linhas.join("\n"));
 }
