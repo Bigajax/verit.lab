@@ -81,13 +81,13 @@ export default function Home() {
               <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Nada</span>
               <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Aqui</span>
               <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Se</span>
-              <span className="font-marker block -rotate-1 pt-2 text-[15vw] font-normal normal-case tracking-normal text-ambar sm:text-8xl lg:text-[6rem]">
-                repete.
+              <span className="font-marker block -rotate-1 pt-2 text-[16vw] font-normal tracking-normal text-ambar sm:text-8xl lg:text-[7rem]">
+                Repete.
               </span>
             </h1>
             <svg
               aria-hidden
-              className="mt-1 h-3 w-56 text-ambar sm:w-72"
+              className="mt-1 h-4 w-72 text-ambar sm:w-96"
               viewBox="0 0 300 14"
               fill="none"
               preserveAspectRatio="none"
@@ -95,7 +95,7 @@ export default function Home() {
               <path
                 d="M4 9 C 60 3, 150 12, 296 5"
                 stroke="currentColor"
-                strokeWidth="6"
+                strokeWidth="8"
                 strokeLinecap="round"
               />
             </svg>

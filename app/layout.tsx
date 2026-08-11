@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Serif, Permanent_Marker } from "next/font/google";
+import { Archivo, Instrument_Serif, Protest_Revolution } from "next/font/google";
 import "./globals.css";
 import { site } from "@/data/site.config";
 
@@ -17,7 +17,7 @@ const archivo = Archivo({
   display: "swap",
 });
 
-const permanent = Permanent_Marker({
+const permanent = Protest_Revolution({
   variable: "--font-permanent",
   weight: "400",
   subsets: ["latin"],
