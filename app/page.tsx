@@ -136,7 +136,9 @@ export default function Home() {
             <p className="mt-6 max-w-56 text-osso/70">
               Cada uma existe uma única vez. Vendeu, não volta.
             </p>
-            <p className="eyebrow mt-4 text-osso/45">preço sob consulta</p>
+            <p className="eyebrow mt-4 max-w-52 text-osso/45">
+              quantidade limitada · consulte disponibilidade
+            </p>
             {/* carimbo nothing repeat */}
             <svg
               aria-hidden
@@ -188,7 +190,14 @@ export default function Home() {
                           <p className="mt-1 text-sm text-osso/55">
                             {peca.tipo} · {peca.medida}
                           </p>
-                          <p className="mt-1 text-sm font-semibold text-ambar">
+                          <p className="mt-1.5 text-lg font-bold leading-none text-ambar">
+                            {peca.estado === "vendida"
+                              ? "vendida"
+                              : peca.preco
+                                ? `R$ ${peca.preco.toLocaleString("pt-BR")}`
+                                : "sob consulta"}
+                          </p>
+                          <p className="mt-2.5 text-sm font-semibold text-ambar">
                             {peca.estado === "vendida" ? (
                               <Cta
                                 cta={`peca-vendida-${peca.slug}`}
