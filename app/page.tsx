@@ -78,16 +78,16 @@ export default function Home() {
         <div className="relative z-10 order-1 w-full flex-1 px-5 pt-12 sm:px-10 lg:order-none lg:flex lg:flex-col lg:justify-center lg:pt-0">
           <div className="lg:max-w-[46%]">
             <h1 className="font-extrabold uppercase leading-[0.88] tracking-tight">
-              <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Nada</span>
-              <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Aqui</span>
-              <span className="block text-[17vw] sm:text-8xl lg:text-[6.5rem]">Se</span>
-              <span className="font-marker block -rotate-1 pt-2 text-[16vw] font-normal tracking-normal text-ambar sm:text-8xl lg:text-[7rem]">
+              <span className="block text-[17vw] sm:text-8xl lg:text-[7.2vw]">Nada</span>
+              <span className="block text-[17vw] sm:text-8xl lg:text-[7.2vw]">Aqui</span>
+              <span className="block text-[17vw] sm:text-8xl lg:text-[7.2vw]">Se</span>
+              <span className="font-marker block -rotate-1 pt-2 text-[16vw] font-normal tracking-normal text-ambar sm:text-8xl lg:text-[6.8vw]">
                 Repete.
               </span>
             </h1>
             <svg
               aria-hidden
-              className="mt-1 h-4 w-72 text-ambar sm:w-96"
+              className="mt-1 h-4 w-72 text-ambar sm:w-96 lg:h-5 lg:w-[26vw]"
               viewBox="0 0 300 14"
               fill="none"
               preserveAspectRatio="none"
@@ -99,7 +99,7 @@ export default function Home() {
                 strokeLinecap="round"
               />
             </svg>
-            <p className="mt-8 max-w-xs text-osso/70">
+            <p className="mt-8 max-w-xs text-osso/70 lg:mt-10 lg:max-w-md lg:text-lg">
               Peças únicas, feitas à mão, para espaços que também têm
               personalidade.
             </p>
