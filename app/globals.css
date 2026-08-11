@@ -135,10 +135,31 @@ body {
 }
 
 .pill[data-on="true"] {
-  background: var(--ambar);
-  border-color: var(--ambar);
+  background: var(--rosa);
+  border-color: var(--rosa);
   color: var(--preto);
   font-weight: 600;
+}
+
+.btn-rosa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 2px;
+  background: var(--rosa);
+  color: var(--preto);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 1rem 1.8rem;
+  border: 1px solid var(--rosa);
+  transition: filter 0.2s ease;
+}
+
+.btn-rosa:hover {
+  filter: brightness(1.08);
 }
 
 /* Carimbo circular girando devagar */

@@ -122,7 +122,7 @@ export default function FormEncomenda() {
         </p>
       )}
 
-      <button type="submit" className="btn-ambar justify-self-start">
+      <button type="submit" className="btn-rosa justify-self-start">
         Enviar pelo WhatsApp
       </button>
     </form>

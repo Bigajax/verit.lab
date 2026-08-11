@@ -173,12 +173,12 @@ export default function Home() {
             <svg
               aria-hidden
               viewBox="0 0 120 120"
-              className="mt-12 hidden w-28 animate-[girar_20s_linear_infinite] text-rosa motion-reduce:animate-none lg:block"
+              className="mt-12 hidden w-40 animate-[girar_20s_linear_infinite] text-rosa motion-reduce:animate-none lg:block"
             >
               <defs>
-                <path id="circ" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
+                <path id="circ" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
               </defs>
-              <text fontSize="11" letterSpacing="3" fill="currentColor">
+              <text fontSize="13.5" fontWeight="800" letterSpacing="2.2" fill="currentColor">
                 <textPath href="#circ">nothing repeat · nothing repeat ·</textPath>
               </text>
             </svg>
@@ -339,32 +339,38 @@ export default function Home() {
         <div className="grid gap-14 px-5 py-24 sm:px-12 lg:px-20 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
           <div>
             <p className="eyebrow mb-4">Peças sob encomenda</p>
-            <h2 className="font-display text-5xl leading-[0.95] sm:text-6xl">
-              Você pensa.
-              <br />
-              <em className="text-ambar">A gente cria.</em>
+            <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
+              <span className="block text-5xl sm:text-6xl">Você</span>
+              <span className="block text-5xl sm:text-6xl">pensa.</span>
+              <span className="font-marker block -rotate-1 pt-3 text-4xl font-normal normal-case tracking-normal text-rosa sm:text-5xl">
+                a gente cria.
+              </span>
             </h2>
-            <p className="mt-6 max-w-sm text-osso/70">
+            <p className="mt-7 max-w-sm text-osso/70">
               Você escolhe a frase, a referência ou a ideia. A vérít transforma
               isso em um objeto único.
             </p>
-            <ol className="mt-10 space-y-4 border-t border-ouro/25 pt-6 text-sm text-osso/70">
+            <ol className="mt-10 space-y-4 text-osso/70">
               <li>
-                <strong className="text-osso">01 — sua ideia.</strong> Toda peça
+                <strong className="mr-2 text-rosa">01</strong>
+                <strong className="text-osso">sua ideia.</strong> Toda peça
                 começa numa conversa.
               </li>
               <li>
-                <strong className="text-osso">02 — criação autoral.</strong>{" "}
-                Moldura, grafite e acabamento à mão, no estúdio.
+                <strong className="mr-2 text-rosa">02</strong>
+                <strong className="text-osso">criação autoral.</strong> Moldura,
+                grafite e acabamento à mão.
               </li>
               <li>
-                <strong className="text-osso">03 — entrega.</strong> Assinada,
-                única, sem cópia.
+                <strong className="mr-2 text-rosa">03</strong>
+                <strong className="text-osso">entrega.</strong> Assinada, única,
+                sem cópia.
               </li>
             </ol>
-            <p className="mt-8 text-osso/80">
-              Encomendas a partir de{" "}
-              <strong className="text-ambar">{definir.encomendaMinima}</strong>
+            <p className="mt-10">
+              <span className="inline-block -rotate-1 bg-rosa px-4 py-2.5 text-sm font-bold uppercase tracking-[0.12em] text-preto">
+                Encomendas a partir de {definir.encomendaMinima}
+              </span>
             </p>
           </div>
           <FormEncomenda />
