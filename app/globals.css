@@ -120,6 +120,10 @@ body {
 }
 
 .pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem; /* alvo de toque ≥ 44px */
   border: 1px solid color-mix(in srgb, var(--osso) 30%, transparent);
   border-radius: 2px;
   padding: 0.5rem 1.1rem;
@@ -134,11 +138,12 @@ body {
   color: var(--osso);
 }
 
+/* Selecionado = mesmo laranja do CTA primário, texto escuro */
 .pill[data-on="true"] {
-  background: var(--rosa);
-  border-color: var(--rosa);
+  background: var(--ambar);
+  border-color: var(--ambar);
   color: var(--preto);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .btn-rosa {
@@ -160,6 +165,30 @@ body {
 
 .btn-rosa:hover {
   filter: brightness(1.08);
+}
+
+/* CTA do card da galeria: linha inteira, alvo de toque ≥ 48px */
+.btn-card {
+  display: flex;
+  width: 100%;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--ambar) 50%, transparent);
+  border-radius: 2px;
+  color: var(--ambar);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-card:hover {
+  background: var(--ambar);
+  border-color: var(--ambar);
+  color: var(--preto);
 }
 
 /* Carimbo circular girando devagar */

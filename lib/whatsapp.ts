@@ -5,8 +5,8 @@ export function waLink(mensagem: string) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`;
 }
 
-// As mensagens usam a voz da vérít ("nada se repete") e a formatação do
-// WhatsApp (*asteriscos* viram negrito). Toda mensagem identifica a origem.
+// As mensagens usam a formatação do WhatsApp (*asteriscos* viram negrito).
+// Toda mensagem identifica a origem (galeria online).
 export const waGeral = () =>
   waLink(
     [
@@ -15,18 +15,20 @@ export const waGeral = () =>
     ].join("\n"),
   );
 
-export const waPeca = (peca: Peca) => {
-  const linhas = [
-    "Oi, vérít! 🖤",
-    "Vi essa peça na galeria e, como nada aí se repete, quero garantir a minha:",
-    "",
-    `*${peca.nome}*`,
-    `${peca.tipo} · ${peca.medida}`,
-  ];
-  if (peca.preco) linhas.push(`R$ ${peca.preco.toLocaleString("pt-BR")}`);
-  linhas.push("", "Ela ainda está disponível?");
-  return waLink(linhas.join("\n"));
-};
+// CTA da peça pronta: curto e direto — nome + número do card.
+export const waPeca = (peca: Peca, numero: number) =>
+  waLink(
+    `Oi! Quero a *${peca.nome}* (nº ${String(numero).padStart(2, "0")}). Ela ainda está disponível?`,
+  );
+
+// Sticky bar mobile: intenção de encomenda, sem passar pela ficha.
+export const waEncomendaDireta = () =>
+  waLink(
+    [
+      "Oi, vérít! 🖤",
+      "Vim pela galeria online e quero encomendar uma peça única. Bora criar a minha?",
+    ].join("\n"),
+  );
 
 export type Encomenda = {
   tipo: string;
@@ -34,7 +36,6 @@ export type Encomenda = {
   local: string;
   inspiracao: string;
   nome: string;
-  whatsapp: string;
 };
 
 export function waEncomenda(e: Encomenda) {
@@ -49,13 +50,7 @@ export function waEncomenda(e: Encomenda) {
   ];
   if (e.inspiracao.trim())
     linhas.push(`✦ Peça que inspirou: ${e.inspiracao}`);
-  linhas.push(
-    "",
-    "*Contato*",
-    `✦ Nome: ${e.nome}`,
-    `✦ WhatsApp: ${e.whatsapp}`,
-    "",
-    "Bora criar a minha?",
-  );
+  if (e.nome.trim()) linhas.push(`✦ Nome: ${e.nome}`);
+  linhas.push("", "Bora criar a minha?");
   return waLink(linhas.join("\n"));
 }

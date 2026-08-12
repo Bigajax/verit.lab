@@ -2,19 +2,20 @@ import Image from "next/image";
 import Cta from "@/components/Cta";
 import Reveal from "@/components/Reveal";
 import FormEncomenda from "@/components/FormEncomenda";
+import StickyCta from "@/components/StickyCta";
 import { pecas } from "@/data/pieces";
-import { site, definir } from "@/data/site.config";
+import { site } from "@/data/site.config";
 import { waGeral, waPeca } from "@/lib/whatsapp";
 
-// Ritmo assimétrico da galeria: a proporção da foto varia por posição.
-const RITMO = [
-  "aspect-[4/5]",
-  "aspect-[3/4]",
-  "aspect-square",
-  "aspect-[3/4]",
-  "aspect-[4/5]",
-  "aspect-square",
-];
+// Imports estáticos das fotos de ambiente: blur automático + zero CLS.
+import fotoSala from "@/public/images/ambiente/sala.jpg";
+import fotoBandeja from "@/public/images/ambiente/bandeja.jpg";
+import fotoPatos from "@/public/images/ambiente/patos.jpg";
+import fotoEstudio from "@/public/images/ambiente/estudio.jpg";
+import fotoQuarto from "@/public/images/ambiente/quarto.jpg";
+import fotoCorredor from "@/public/images/ambiente/corredor.jpg";
+import fotoHero from "@/public/images/ambiente/hero.jpg";
+import tintaCor from "@/public/images/deco/tinta-cor.png";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
       <div aria-hidden className="fixed inset-y-0 left-6 z-10 hidden w-px bg-ouro/10 lg:block" />
 
       {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
-      <section className="relative flex flex-col lg:min-h-[94vh]">
+      <section id="hero" className="relative flex flex-col lg:min-h-[94vh]">
         <header className="relative z-20 flex w-full items-center justify-between px-5 pt-6 sm:px-12 lg:px-20">
           <p className="font-display text-2xl italic">vérít.lab</p>
           <p className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex">
@@ -39,7 +40,7 @@ export default function Home() {
             href={site.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="eyebrow hover:text-ambar"
+            className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
           >
             {site.instagramHandle}
           </a>
@@ -48,10 +49,11 @@ export default function Home() {
         {/* foto: metade direita inteira, fundida no preto */}
         <div className="relative z-0 order-2 mt-8 h-80 sm:h-[26rem] lg:absolute lg:inset-y-0 lg:right-6 lg:order-none lg:mt-0 lg:h-full lg:w-[52%]">
           <Image
-            src="/images/ambiente/sala.jpg"
+            src={fotoSala}
             alt="Sala escura da vérít.lab com quadros e espelhos grafitados iluminados"
             fill
-            priority
+            preload
+            placeholder="blur"
             sizes="(min-width: 1024px) 54vw, 100vw"
             className="object-cover [mask-image:linear-gradient(to_bottom,black_75%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_32%)]"
           />
@@ -66,17 +68,16 @@ export default function Home() {
           />
         </div>
 
-        {/* tinta escorrendo do topo — cor original da textura, fundo transparente por alfa */}
+        {/* tinta escorrendo do topo — decorativa, só no desktop: carrega lazy */}
         <div
           aria-hidden
           className="pointer-events-none absolute left-0 top-0 z-0 hidden w-[44%] opacity-50 lg:block"
         >
           <Image
-            src="/images/deco/tinta-cor.png"
+            src={tintaCor}
             alt=""
-            width={1280}
-            height={853}
-            priority
+            loading="lazy"
+            sizes="(min-width: 1024px) 44vw, 1px"
             className="h-auto w-full [mask-image:radial-gradient(130%_130%_at_0%_0%,black_55%,transparent_80%)]"
           />
         </div>
@@ -172,7 +173,7 @@ export default function Home() {
             <p className="mt-6 max-w-56 text-osso/70">
               Cada uma existe uma única vez. Vendeu, não volta.
             </p>
-            <p className="eyebrow mt-4 max-w-52 text-osso/45">
+            <p className="eyebrow mt-4 max-w-52 text-osso/55">
               quantidade limitada · consulte disponibilidade
             </p>
             {/* carimbo nothing repeat */}
@@ -190,18 +191,19 @@ export default function Home() {
             </svg>
           </div>
 
-          {/* cards */}
+          {/* cards — foto padronizada em 4:5 (mata CLS na rolagem) */}
           <div>
             <div className="columns-1 gap-6 sm:columns-2">
               {pecas.map((peca, i) => (
                 <div key={peca.slug} className="mb-6 break-inside-avoid">
                   <Reveal>
                     <article className="group border border-ouro/25 bg-osso/[0.03] transition-colors duration-300 hover:border-ambar/70">
-                      <div className={`relative overflow-hidden ${RITMO[i % RITMO.length]}`}>
+                      <div className="relative aspect-[4/5] overflow-hidden">
                         <Image
                           src={peca.foto}
                           alt={peca.alt}
                           fill
+                          placeholder="blur"
                           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
                           className={`object-cover transition-transform duration-500 group-hover:scale-[1.03] ${
                             peca.estado === "vendida" ? "opacity-40 saturate-50" : ""
@@ -218,50 +220,50 @@ export default function Home() {
                         )}
                       </div>
                       {/* etiqueta */}
-                      <div className="flex items-center justify-between gap-4 p-4">
-                        <div className="min-w-0">
-                          <h3 className="truncate text-sm font-bold uppercase tracking-[0.14em]">
-                            {peca.nome}
-                          </h3>
-                          <p className="mt-1 text-sm text-osso/55">
-                            {peca.tipo} · {peca.medida}
-                          </p>
-                          <p className="mt-1.5 text-lg font-bold leading-none text-ambar">
-                            {peca.estado === "vendida"
-                              ? "vendida"
-                              : peca.preco
-                                ? `R$ ${peca.preco.toLocaleString("pt-BR")}`
-                                : "sob consulta"}
-                          </p>
-                          <p className="mt-2.5 text-sm font-semibold text-ambar">
-                            {peca.estado === "vendida" ? (
-                              <Cta
-                                cta={`peca-vendida-${peca.slug}`}
-                                href="#encomenda"
-                                className="font-medium text-osso/70 underline decoration-ouro/50 underline-offset-4 hover:text-ambar"
-                              >
-                                Encomende a sua →
-                              </Cta>
-                            ) : (
-                              <Cta
-                                cta={`peca-${peca.slug}`}
-                                href={waPeca(peca)}
-                                novaAba
-                                className="underline-offset-4 hover:underline"
-                              >
-                                Quero essa →
-                              </Cta>
-                            )}
-                          </p>
+                      <div className="p-4">
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="min-w-0">
+                            <h3 className="truncate text-sm font-bold uppercase tracking-[0.14em]">
+                              {peca.nome}
+                            </h3>
+                            <p className="mt-1 text-sm text-osso/55">
+                              {peca.tipo} · {peca.medida}
+                            </p>
+                            <p className="mt-1.5 text-lg font-bold leading-none text-ambar">
+                              {peca.estado === "vendida"
+                                ? "vendida"
+                                : peca.preco
+                                  ? `R$ ${peca.preco.toLocaleString("pt-BR")}`
+                                  : "sob consulta"}
+                            </p>
+                          </div>
+                          <div className="shrink-0 border border-ouro/40 px-3 py-2 text-center">
+                            <p className="text-lg leading-none text-ambar">
+                              {String(i + 1).padStart(2, "0")}
+                            </p>
+                            <p className="mt-1 text-[0.6rem] uppercase tracking-[0.18em] text-osso/55">
+                              {peca.estado === "vendida" ? "vendida" : "única"}
+                            </p>
+                          </div>
                         </div>
-                        <div className="shrink-0 border border-ouro/40 px-3 py-2 text-center">
-                          <p className="text-lg leading-none text-ambar">
-                            {String(i + 1).padStart(2, "0")}
-                          </p>
-                          <p className="mt-1 text-[0.6rem] uppercase tracking-[0.18em] text-osso/55">
-                            {peca.estado === "vendida" ? "vendida" : "única"}
-                          </p>
-                        </div>
+                        {peca.estado === "vendida" ? (
+                          <Cta
+                            cta={`peca-vendida-${peca.slug}`}
+                            href="#encomenda"
+                            className="btn-card mt-4"
+                          >
+                            Encomende a sua <span aria-hidden>→</span>
+                          </Cta>
+                        ) : (
+                          <Cta
+                            cta={`peca-${peca.slug}`}
+                            href={waPeca(peca, i + 1)}
+                            novaAba
+                            className="btn-card mt-4"
+                          >
+                            Quero essa <span aria-hidden>→</span>
+                          </Cta>
+                        )}
                       </div>
                     </article>
                   </Reveal>
@@ -315,9 +317,10 @@ export default function Home() {
           <div className="relative lg:col-span-5">
             <div className="relative aspect-[3/4] w-full lg:-mr-16">
               <Image
-                src="/images/ambiente/bandeja.jpg"
+                src={fotoBandeja}
                 alt="Bandeja dourada nothing repeat com pratos grafitados da vérít.lab"
                 fill
+                placeholder="blur"
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 className="object-cover"
               />
@@ -325,9 +328,10 @@ export default function Home() {
             <div className="absolute -bottom-10 -left-6 hidden w-40 rotate-3 lg:block">
               <div className="relative aspect-[9/16] w-full">
                 <Image
-                  src="/images/ambiente/patos.jpg"
+                  src={fotoPatos}
                   alt="Lago cheio de patos pretos idênticos e um único pato amarelo"
                   fill
+                  placeholder="blur"
                   sizes="160px"
                   className="object-cover"
                 />
@@ -373,11 +377,8 @@ export default function Home() {
                 sem cópia.
               </li>
             </ol>
-            <p className="mt-10">
-              <span className="inline-block -rotate-1 bg-rosa px-4 py-2.5 text-sm font-bold uppercase tracking-[0.12em] text-preto">
-                Encomendas a partir de {definir.encomendaMinima}
-              </span>
-            </p>
+            {/* Tarja de valor mínimo removida até a vérít definir o número real
+                (nenhum placeholder pode ir pro ar). */}
           </div>
           <FormEncomenda />
         </div>
@@ -413,7 +414,7 @@ export default function Home() {
             cta="bastidores-instagram"
             href={site.instagram}
             novaAba
-            className="eyebrow hover:text-ambar"
+            className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
           >
             ver o que está acontecendo →
           </Cta>
@@ -421,27 +422,27 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
           {[
             {
-              src: "/images/ambiente/estudio.jpg",
+              src: fotoEstudio,
               alt: "Mesa de criação da vérít.lab com tintas, pincéis e espelho rabiscado",
               off: "",
             },
             {
-              src: "/images/ambiente/quarto.jpg",
+              src: fotoQuarto,
               alt: "Quarto com espelho oval amarelo e peças pop da vérít.lab",
               off: "lg:mt-10",
             },
             {
-              src: "/images/ambiente/corredor.jpg",
+              src: fotoCorredor,
               alt: "Corredor escuro com quadros neon e arte urbana",
               off: "",
             },
             {
-              src: "/images/ambiente/hero.jpg",
+              src: fotoHero,
               alt: "Espelho de moldura orgânica creme com frase pintada, em corredor de apartamento",
               off: "lg:mt-10",
             },
           ].map((foto) => (
-            <Reveal key={foto.src} className={foto.off}>
+            <Reveal key={foto.src.src} className={foto.off}>
               <a
                 href={site.instagram}
                 target="_blank"
@@ -453,6 +454,7 @@ export default function Home() {
                     src={foto.src}
                     alt={foto.alt}
                     fill
+                    placeholder="blur"
                     sizes="(min-width: 1024px) 22vw, 45vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
@@ -480,11 +482,11 @@ export default function Home() {
             </h2>
             <p className="mt-5 text-osso/70">Peça única. Uma vez só.</p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Cta cta="final-whatsapp" href={waGeral()} novaAba className="btn-ambar">
-                Quero a minha
-              </Cta>
-              <Cta cta="final-encomendar" href="#encomenda" className="btn-outline">
+              <Cta cta="final-encomendar" href="#encomenda" className="btn-ambar">
                 Montar minha peça
+              </Cta>
+              <Cta cta="final-ver-pecas" href="#pecas" className="btn-outline">
+                Ver peças
               </Cta>
             </div>
           </div>
@@ -492,11 +494,11 @@ export default function Home() {
             {[
               {
                 q: "Qual o prazo de uma encomenda?",
-                a: `O prazo médio é de ${definir.prazoMedio}, contando da aprovação da ideia. Peças prontas saem para entrega em seguida.`,
+                a: "Cada peça tem o seu tempo — o prazo é combinado na conversa, na aprovação da ideia. Peças prontas saem para entrega em seguida.",
               },
               {
                 q: "Vocês enviam para onde?",
-                a: `Enviamos para ${definir.envio}. O frete é combinado na conversa, junto com a embalagem adequada para a peça.`,
+                a: "O envio, o frete e a embalagem são combinados direto na conversa, de acordo com a peça e a sua cidade.",
               },
               {
                 q: "Como cuido da minha peça?",
@@ -504,7 +506,7 @@ export default function Home() {
               },
             ].map((item) => (
               <details key={item.q} className="group border-b border-ouro/25 pb-2">
-                <summary className="flex cursor-pointer list-none items-center justify-between py-4 font-medium">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between py-4 font-medium">
                   {item.q}
                   <span className="text-ouro transition-transform group-open:rotate-45">
                     +
@@ -519,20 +521,21 @@ export default function Home() {
 
       {/* ── 08. Footer ──────────────────────────────────────────── */}
       <footer className="border-t border-ouro/25">
-        <div className="flex flex-wrap items-end justify-between gap-8 px-5 py-14 sm:px-12 lg:px-20">
+        {/* pb extra no mobile: a sticky bar nunca cobre os links do rodapé */}
+        <div className="flex flex-wrap items-end justify-between gap-8 px-5 pt-14 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:px-12 lg:px-20 lg:pb-14">
           <div>
             <p className="font-display text-4xl italic">vérít.lab</p>
             <p className="font-marker mt-2 -rotate-1 text-xl text-rosa">
               nothing repeat.
             </p>
-            <p className="eyebrow mt-3 text-osso/40">{site.cidade} · PR</p>
+            <p className="eyebrow mt-3 text-osso/55">{site.cidade} · PR</p>
           </div>
           <nav className="flex gap-8">
             <a
               href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-osso/70 hover:text-ambar"
+              className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
             >
               Instagram
             </a>
@@ -540,13 +543,16 @@ export default function Home() {
               href={waGeral()}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-osso/70 hover:text-ambar"
+              className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
             >
               WhatsApp
             </a>
           </nav>
         </div>
       </footer>
+
+      {/* barra fixa de conversão — só mobile */}
+      <StickyCta />
     </main>
   );
 }

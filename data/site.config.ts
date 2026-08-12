@@ -11,9 +11,6 @@ export const site = {
   instagramHandle: "@verit.lab",
 } as const;
 
-// Textos com [DEFINIR] visíveis de propósito — trocar quando a vérít definir.
-export const definir = {
-  encomendaMinima: "R$ [DEFINIR]",
-  prazoMedio: "[DEFINIR] dias",
-  envio: "[DEFINIR: região de Maringá ou todo o Brasil]",
-} as const;
+// Pendências de conteúdo (nada disso é renderizado até ser definido):
+// - valor mínimo de encomenda → quando existir, recriar a tarja rosa na seção 04
+// - prazo médio e política de envio → hoje o FAQ responde "combinado na conversa"

@@ -11,13 +11,14 @@ function Num({ n }: { n: string }) {
 }
 
 // Ficha de encomenda: o submit gera a mensagem formatada e abre o wa.me.
+// Sem campo de WhatsApp: a mensagem sai do WhatsApp da própria pessoa,
+// o número vai junto automaticamente.
 export default function FormEncomenda() {
   const [tipo, setTipo] = useState("");
   const [ideia, setIdeia] = useState("");
   const [local, setLocal] = useState("");
   const [inspiracao, setInspiracao] = useState("");
   const [nome, setNome] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
   const [erro, setErro] = useState("");
 
   function enviar(ev: React.FormEvent) {
@@ -25,12 +26,10 @@ export default function FormEncomenda() {
     if (!tipo) return setErro("Escolha o tipo de peça.");
     if (!ideia.trim()) return setErro("Conte a frase ou ideia da sua peça.");
     if (!local) return setErro("Diga onde a peça vai ficar.");
-    if (!nome.trim() || !whatsapp.trim())
-      return setErro("Preencha seu nome e WhatsApp para a vérít responder.");
     setErro("");
     console.log("[verit-cta]", "form-encomenda");
     window.open(
-      waEncomenda({ tipo, ideia, local, inspiracao, nome, whatsapp }),
+      waEncomenda({ tipo, ideia, local, inspiracao, nome }),
       "_blank",
       "noopener,noreferrer",
     );
@@ -84,7 +83,7 @@ export default function FormEncomenda() {
             onChange={(e) => setIdeia(e.target.value)}
             placeholder={'Ex.: "nem tudo precisa fazer sentido", uma referência, um sentimento…'}
           />
-          <span className="text-xs text-osso/45">
+          <span className="text-xs text-osso/60">
             Pode ser uma frase pronta, uma referência do feed ou só um
             sentimento — a vérít desenha a partir daí.
           </span>
@@ -127,38 +126,22 @@ export default function FormEncomenda() {
           />
         </label>
 
-        <div>
-          <p className="eyebrow mb-4">
+        <label className="grid gap-3">
+          <span className="eyebrow">
             <Num n="05" />
-            Seus contatos
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-2">
-              <span className="text-xs uppercase tracking-[0.18em] text-osso/55">
-                Nome
-              </span>
-              <input
-                className="campo"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                autoComplete="name"
-              />
-            </label>
-            <label className="grid gap-2">
-              <span className="text-xs uppercase tracking-[0.18em] text-osso/55">
-                WhatsApp
-              </span>
-              <input
-                className="campo"
-                value={whatsapp}
-                onChange={(e) => setWhatsapp(e.target.value)}
-                inputMode="tel"
-                autoComplete="tel"
-                placeholder="(44) 9…"
-              />
-            </label>
-          </div>
-        </div>
+            Seu nome{" "}
+            <span className="normal-case tracking-normal opacity-60">
+              (opcional)
+            </span>
+          </span>
+          <input
+            className="campo"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            autoComplete="name"
+            placeholder="Como a vérít te chama?"
+          />
+        </label>
 
         {erro && (
           <p role="alert" className="text-sm font-semibold text-rosa">
@@ -166,13 +149,13 @@ export default function FormEncomenda() {
           </p>
         )}
 
-        <div className="flex flex-wrap items-center gap-5 border-t border-ouro/30 pt-6">
-          <button type="submit" className="btn-rosa">
+        <div className="grid gap-5 border-t border-ouro/30 pt-6 sm:flex sm:flex-wrap sm:items-center">
+          <button type="submit" className="btn-rosa w-full sm:w-auto">
             Enviar pelo WhatsApp <span aria-hidden>→</span>
           </button>
-          <p className="max-w-52 text-xs leading-relaxed text-osso/50">
-            Sem cadastro: abre o seu WhatsApp com a mensagem pronta para a
-            vérít.
+          <p className="max-w-60 text-xs leading-relaxed text-osso/60">
+            Sem cadastro: abre o seu WhatsApp com a ficha pronta — seu número
+            já vai junto na mensagem.
           </p>
         </div>
       </div>
