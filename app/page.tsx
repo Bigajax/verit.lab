@@ -73,9 +73,13 @@ export default async function Home() {
       </header>
 
       {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
-      <section id="hero" className="relative flex flex-col lg:min-h-[88vh]">
-        {/* foto: metade direita inteira, fundida no preto */}
-        <div className="relative z-0 order-2 mt-8 h-80 sm:h-[26rem] lg:absolute lg:inset-y-0 lg:right-6 lg:order-none lg:mt-0 lg:h-full lg:w-[52%]">
+      {/* mobile: 100svh (sem pulo da barra do Safari) menos o header em fluxo */}
+      <section
+        id="hero"
+        className="relative flex min-h-[calc(100svh-4.75rem)] flex-col lg:min-h-[88vh]"
+      >
+        {/* foto: fundo inteiro no mobile; metade direita no desktop */}
+        <div className="absolute inset-0 z-0 lg:left-auto lg:right-6 lg:w-[52%]">
           <Image
             src={fotoSala}
             alt="Sala escura da vérít.lab com quadros e espelhos grafitados iluminados"
@@ -83,7 +87,16 @@ export default async function Home() {
             preload
             placeholder="blur"
             sizes="(min-width: 1024px) 54vw, 100vw"
-            className="object-cover [mask-image:linear-gradient(to_bottom,black_75%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_32%)]"
+            className="object-cover object-[62%_center] lg:object-center lg:[mask-image:linear-gradient(to_right,transparent,black_32%)]"
+          />
+          {/* scrim mobile: texto na faixa escura de cima, foto respira no meio */}
+          <div
+            aria-hidden
+            className="absolute inset-0 lg:hidden"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(10,8,6,0.94) 0%, rgba(10,8,6,0.88) 42%, rgba(10,8,6,0.55) 68%, rgba(10,8,6,0.90) 100%)",
+            }}
           />
           {/* escurece o topo da foto (o watermark gravado nela some atrás do header) */}
           <div
@@ -120,11 +133,12 @@ export default async function Home() {
           />
         </div>
 
-        <div className="relative z-10 order-1 w-full flex-1 px-5 pt-12 sm:px-12 lg:px-20 lg:order-none lg:flex lg:flex-col lg:justify-center lg:pt-0">
+        <div className="relative z-10 flex w-full flex-1 flex-col px-5 pt-[5.5rem] sm:px-12 lg:justify-center lg:px-20 lg:pt-0">
           <div className="lg:max-w-[46%] lg:pl-[3vw]">
-            {/* kicker: o que a vérít vende, em 1 segundo */}
-            <p className="mb-5 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-rosa">
-              Espelhos · Quadros · Objetos · Feitos à mão
+            {/* kicker: o que a vérít vende, em 1 segundo — 1 linha em 360px */}
+            <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.14em] text-ambar sm:text-[0.7rem] sm:tracking-[0.18em]">
+              Espelhos · Quadros · Objetos
+              <span className="hidden sm:inline"> · Feitos à mão</span>
             </p>
             {/* H1 em 2 linhas fixas — quebra manual, nunca 4 linhas */}
             <h1 className="font-extrabold uppercase leading-[0.92] tracking-tight">
@@ -156,14 +170,24 @@ export default async function Home() {
               Peças únicas, feitas à mão, para espaços que também têm
               personalidade.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Cta cta="hero-ver-pecas" href="/pecas" className="btn-ambar">
+            {/* CTAs compactos no mobile: empilhados, ≤120px somados */}
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
+              <Cta
+                cta="hero-ver-pecas"
+                href="/pecas"
+                className="btn-ambar w-full py-3.5! sm:w-auto sm:py-4!"
+              >
                 Ver peças <span aria-hidden>→</span>
               </Cta>
-              <Cta cta="hero-encomendar" href="#encomenda" className="btn-outline">
+              <Cta
+                cta="hero-encomendar"
+                href="#encomenda"
+                className="btn-outline w-full py-3.5! sm:w-auto sm:py-4!"
+              >
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
             </div>
+            {/* seta desktop: intocada */}
             <a
               href="#pecas"
               aria-label="Descer para a galeria"
@@ -172,13 +196,21 @@ export default async function Home() {
               ↓
             </a>
           </div>
+          {/* seta mobile: ancorada no rodapé do hero */}
+          <a
+            href="#pecas"
+            aria-label="Descer para a galeria"
+            className="mb-6 mt-auto inline-flex h-9 w-9 items-center justify-center self-start rounded-full border border-osso/30 text-osso/60 [animation:flutuar_2.6s_ease-in-out_infinite] motion-reduce:animate-none lg:hidden"
+          >
+            ↓
+          </a>
         </div>
       </section>
 
       {/* ── Faixa rotativa — taglines do catálogo ───────────────── */}
       <div
         aria-hidden
-        className="relative mt-14 -rotate-1 overflow-hidden bg-rosa py-3 lg:mt-0"
+        className="relative -rotate-1 overflow-hidden bg-rosa py-3"
         style={{ width: "104%", marginLeft: "-2%" }}
       >
         <div className="flex w-max animate-[faixa_32s_linear_infinite] motion-reduce:animate-none">

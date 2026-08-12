@@ -14,8 +14,11 @@ export default function StickyCta() {
     const hero = document.getElementById("hero");
     const ficha = document.getElementById("encomenda");
     if (!hero || !ficha) return;
-    const ioHero = new IntersectionObserver(([entry]) =>
-      setAposHero(!entry.isIntersecting),
+    // threshold 0: o hero conta como visível enquanto QUALQUER pedaço
+    // dele estiver em tela — a barra só entra depois que ele sai inteiro.
+    const ioHero = new IntersectionObserver(
+      ([entry]) => setAposHero(!entry.isIntersecting),
+      { threshold: 0 },
     );
     const ioFicha = new IntersectionObserver(([entry]) =>
       setFichaVisivel(entry.isIntersecting),
@@ -33,8 +36,8 @@ export default function StickyCta() {
   return (
     <div
       aria-hidden={!visivel}
-      className={`fixed inset-x-0 bottom-0 z-40 bg-ambar pb-[env(safe-area-inset-bottom)] transition-transform duration-300 motion-reduce:transition-none lg:hidden ${
-        visivel ? "translate-y-0" : "translate-y-full"
+      className={`fixed inset-x-0 bottom-0 z-40 bg-ambar pb-[calc(12px+env(safe-area-inset-bottom))] transition-[transform,opacity] duration-300 motion-reduce:transition-none lg:hidden ${
+        visivel ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
       }`}
     >
       <a
