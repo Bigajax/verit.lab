@@ -25,11 +25,11 @@ const permanent = Protest_Revolution({
 });
 
 export const metadata: Metadata = {
-  title: "vérít.lab — Nada aqui se repete.",
+  title: "vérít.lab · Nada aqui se repete.",
   description: site.descricao,
   metadataBase: new URL(site.url),
   openGraph: {
-    title: "vérít.lab — Nada aqui se repete.",
+    title: "vérít.lab · Nada aqui se repete.",
     description: site.descricao,
     images: ["/images/ambiente/sala.jpg"],
   },

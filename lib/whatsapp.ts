@@ -1,5 +1,5 @@
 import { site } from "@/data/site.config";
-import type { Peca } from "@/data/pieces";
+import type { Peca } from "@/lib/pecas";
 
 export function waLink(mensagem: string) {
   return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(mensagem)}`;
@@ -15,18 +15,29 @@ export const waGeral = () =>
     ].join("\n"),
   );
 
-// CTA da peça pronta: curto e direto — nome + número do card.
-export const waPeca = (peca: Peca, numero: number) =>
-  waLink(
-    `Oi! Quero a *${peca.nome}* (nº ${String(numero).padStart(2, "0")}). Ela ainda está disponível?`,
-  );
-
 // Sticky bar mobile: intenção de encomenda, sem passar pela ficha.
 export const waEncomendaDireta = () =>
   waLink(
     [
       "Oi, vérít! 🖤",
       "Vim pela galeria online e quero encomendar uma peça única. Bora criar a minha?",
+    ].join("\n"),
+  );
+
+// Página da peça: mensagem leva o link, que vira preview no WhatsApp.
+export const waPecaPagina = (peca: Pick<Peca, "nome" | "numero" | "slug">) =>
+  waLink(
+    [
+      `Oi! Vi a peça *${peca.nome}* (acervo ${peca.numero}) no site e queria saber mais.`,
+      `${site.url}/pecas/${peca.slug}`,
+    ].join("\n"),
+  );
+
+export const waPecaVendida = (peca: Pick<Peca, "nome" | "slug">) =>
+  waLink(
+    [
+      `Oi! Vi que a *${peca.nome}* já foi vendida, mas queria encomendar algo nessa linha.`,
+      `${site.url}/pecas/${peca.slug}`,
     ].join("\n"),
   );
 
@@ -41,7 +52,7 @@ export type Encomenda = {
 export function waEncomenda(e: Encomenda) {
   const linhas = [
     "Oi, vérít! 🖤",
-    "Preenchi a ficha na galeria — quero uma peça única, feita pra mim:",
+    "Preenchi a ficha na galeria e quero uma peça única, feita pra mim:",
     "",
     "*Ficha de encomenda*",
     `✦ Tipo de peça: ${e.tipo}`,

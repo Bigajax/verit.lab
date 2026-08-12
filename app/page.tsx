@@ -1,11 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import Cta from "@/components/Cta";
 import Reveal from "@/components/Reveal";
 import FormEncomenda from "@/components/FormEncomenda";
+import PecaCard from "@/components/PecaCard";
+import SiteFooter from "@/components/SiteFooter";
 import StickyCta from "@/components/StickyCta";
-import { pecas } from "@/data/pieces";
+import { getDestaques } from "@/lib/pecas.server";
 import { site } from "@/data/site.config";
-import { waGeral, waPeca } from "@/lib/whatsapp";
 
 // Imports estáticos das fotos de ambiente: blur automático + zero CLS.
 import fotoSala from "@/public/images/ambiente/sala.jpg";
@@ -17,35 +19,61 @@ import fotoCorredor from "@/public/images/ambiente/corredor.jpg";
 import fotoHero from "@/public/images/ambiente/hero.jpg";
 import tintaCor from "@/public/images/deco/tinta-cor.png";
 
-export default function Home() {
+// ISR: as peças vêm do Supabase e a página se reconstrói a cada 60 s
+// (ou na hora, via revalidatePath, quando o admin salvar algo).
+export const revalidate = 60;
+
+export default async function Home() {
+  // A home mostra só os destaques (máx. 8) — o acervo completo vive em /pecas.
+  const pecas = await getDestaques();
+
   return (
     <main className="overflow-x-clip">
       {/* linha fina de parede de galeria */}
       <div aria-hidden className="fixed inset-y-0 left-6 z-10 hidden w-px bg-ouro/10 lg:block" />
 
-      {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
-      <section id="hero" className="relative flex flex-col lg:min-h-[94vh]">
-        <header className="relative z-20 flex w-full items-center justify-between px-5 pt-6 sm:px-12 lg:px-20">
-          <p className="font-display text-2xl italic">vérít.lab</p>
-          <p className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex">
-            <span>Art</span>
+      {/* header fixo e transparente: só um degradê segura a legibilidade */}
+      <header className="sticky top-0 z-40 bg-gradient-to-b from-preto/80 via-preto/40 to-transparent">
+        <div className="flex w-full items-center justify-between gap-4 px-5 py-4 sm:px-12 lg:px-20">
+          <p className="shrink-0 font-display text-2xl italic">vérít.lab</p>
+          <nav
+            aria-label="Categorias"
+            className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex"
+          >
+            <Link href="/pecas?categoria=quadro" className="hover:text-ambar">
+              Art
+            </Link>
             <span className="text-ambar">/</span>
-            <span>Mirrors</span>
+            <Link href="/pecas?categoria=espelho" className="hover:text-ambar">
+              Mirrors
+            </Link>
             <span className="text-ambar">/</span>
-            <span>Objects</span>
+            <Link href="/pecas?categoria=objeto" className="hover:text-ambar">
+              Objects
+            </Link>
             <span className="text-ambar">·</span>
             <span>{site.cidade}</span>
-          </p>
-          <a
-            href={site.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
-          >
-            {site.instagramHandle}
-          </a>
-        </header>
+          </nav>
+          <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
+            <Link
+              href="/pecas"
+              className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+            >
+              Peças
+            </Link>
+            <a
+              href="#encomenda"
+              className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+            >
+              Encomendar
+            </a>
+            {/* acesso do dono: /admin/login digitado direto */}
+          </nav>
+        </div>
+      </header>
 
+      {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
+      <section id="hero" className="relative flex flex-col lg:min-h-[88vh]">
         {/* foto: metade direita inteira, fundida no preto */}
         <div className="relative z-0 order-2 mt-8 h-80 sm:h-[26rem] lg:absolute lg:inset-y-0 lg:right-6 lg:order-none lg:mt-0 lg:h-full lg:w-[52%]">
           <Image
@@ -66,6 +94,16 @@ export default function Home() {
                 "linear-gradient(to bottom, #100d0a 0%, rgba(16,13,10,0.72) 50%, transparent 100%)",
             }}
           />
+          {/* garante legibilidade do H1 sobre qualquer foto futura;
+              o lado direito mantém o brilho atual */}
+          <div
+            aria-hidden
+            className="absolute inset-0 hidden lg:block"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(10,8,6,0.96) 0%, rgba(10,8,6,0.85) 38%, rgba(10,8,6,0) 68%)",
+            }}
+          />
         </div>
 
         {/* tinta escorrendo do topo — decorativa, só no desktop: carrega lazy */}
@@ -83,35 +121,43 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 order-1 w-full flex-1 px-5 pt-12 sm:px-12 lg:px-20 lg:order-none lg:flex lg:flex-col lg:justify-center lg:pt-0">
-          <div className="lg:max-w-[42%] lg:pl-[3vw]">
-            <h1 className="font-extrabold uppercase leading-[0.88] tracking-tight">
-              <span className="block text-[17vw] sm:text-8xl lg:text-[5.6vw]">Nada</span>
-              <span className="block text-[17vw] sm:text-8xl lg:text-[5.6vw]">Aqui</span>
-              <span className="block text-[17vw] sm:text-8xl lg:text-[5.6vw]">Se</span>
-              <span className="font-marker block -rotate-1 pt-2 text-[16vw] font-normal tracking-normal text-ambar sm:text-8xl lg:text-[5.2vw]">
-                Repete.
+          <div className="lg:max-w-[46%] lg:pl-[3vw]">
+            {/* kicker: o que a vérít vende, em 1 segundo */}
+            <p className="mb-5 text-[0.7rem] font-medium uppercase tracking-[0.18em] text-rosa">
+              Espelhos · Quadros · Objetos · Feitos à mão
+            </p>
+            {/* H1 em 2 linhas fixas — quebra manual, nunca 4 linhas */}
+            <h1 className="font-extrabold uppercase leading-[0.92] tracking-tight">
+              <span className="block text-[clamp(2.7rem,12.5vw,4.8rem)] lg:text-[clamp(3.5rem,7vw,6.5rem)]">
+                Nada aqui
+              </span>
+              {/* inline-block: o sublinhado acompanha a largura de "se repete." */}
+              <span className="inline-block -rotate-1 pt-2">
+                <span className="font-marker block text-[clamp(2.5rem,11.5vw,4.4rem)] font-normal tracking-normal text-ambar lg:text-[clamp(3.2rem,6.4vw,6rem)]">
+                  Se repete.
+                </span>
+                <svg
+                  aria-hidden
+                  className="mt-1 block h-3 w-full text-ambar lg:h-4"
+                  viewBox="0 0 300 14"
+                  fill="none"
+                  preserveAspectRatio="none"
+                >
+                  <path
+                    d="M4 9 C 60 3, 150 12, 296 5"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </span>
             </h1>
-            <svg
-              aria-hidden
-              className="mt-1 h-4 w-72 text-ambar sm:w-96 lg:h-5 lg:w-[19vw]"
-              viewBox="0 0 300 14"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M4 9 C 60 3, 150 12, 296 5"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-            </svg>
-            <p className="mt-8 max-w-xs text-osso/70 lg:mt-10 lg:max-w-md lg:text-lg">
+            <p className="mt-8 max-w-lg text-base leading-normal text-osso/90 lg:text-xl">
               Peças únicas, feitas à mão, para espaços que também têm
               personalidade.
             </p>
-            <div className="mt-9 flex flex-wrap gap-4">
-              <Cta cta="hero-ver-pecas" href="#pecas" className="btn-ambar">
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Cta cta="hero-ver-pecas" href="/pecas" className="btn-ambar">
                 Ver peças <span aria-hidden>→</span>
               </Cta>
               <Cta cta="hero-encomendar" href="#encomenda" className="btn-outline">
@@ -121,7 +167,7 @@ export default function Home() {
             <a
               href="#pecas"
               aria-label="Descer para a galeria"
-              className="mt-12 hidden h-11 w-11 items-center justify-center rounded-full border border-osso/30 text-osso/60 transition-colors [animation:flutuar_2.6s_ease-in-out_infinite] hover:border-ambar hover:text-ambar motion-reduce:animate-none lg:inline-flex"
+              className="mt-16 hidden h-11 w-11 items-center justify-center rounded-full border border-osso/30 text-osso/60 transition-colors [animation:flutuar_2.6s_ease-in-out_infinite] hover:border-ambar hover:text-ambar motion-reduce:animate-none lg:inline-flex"
             >
               ↓
             </a>
@@ -142,7 +188,6 @@ export default function Home() {
               className="flex shrink-0 items-center text-sm font-bold uppercase tracking-[0.2em] text-preto"
             >
               {[
-                "nothing repeat.",
                 "this is not just decor.",
                 "made to be noticed.",
                 "your wall deserves attitude.",
@@ -194,83 +239,18 @@ export default function Home() {
           {/* cards — foto padronizada em 4:5 (mata CLS na rolagem) */}
           <div>
             <div className="columns-1 gap-6 sm:columns-2">
-              {pecas.map((peca, i) => (
+              {pecas.map((peca) => (
                 <div key={peca.slug} className="mb-6 break-inside-avoid">
                   <Reveal>
-                    <article className="group border border-ouro/25 bg-osso/[0.03] transition-colors duration-300 hover:border-ambar/70">
-                      <div className="relative aspect-[4/5] overflow-hidden">
-                        <Image
-                          src={peca.foto}
-                          alt={peca.alt}
-                          fill
-                          placeholder="blur"
-                          sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
-                          className={`object-cover transition-transform duration-500 group-hover:scale-[1.03] ${
-                            peca.estado === "vendida" ? "opacity-40 saturate-50" : ""
-                          }`}
-                        />
-                        {peca.estado === "vendida" && (
-                          /* rosa: uso 1 de 2 */
-                          <p
-                            aria-hidden
-                            className="font-marker absolute inset-0 flex -rotate-12 items-center justify-center text-4xl text-rosa"
-                          >
-                            vendida
-                          </p>
-                        )}
-                      </div>
-                      {/* etiqueta */}
-                      <div className="p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="min-w-0">
-                            <h3 className="truncate text-sm font-bold uppercase tracking-[0.14em]">
-                              {peca.nome}
-                            </h3>
-                            <p className="mt-1 text-sm text-osso/55">
-                              {peca.tipo} · {peca.medida}
-                            </p>
-                            <p className="mt-1.5 text-lg font-bold leading-none text-ambar">
-                              {peca.estado === "vendida"
-                                ? "vendida"
-                                : peca.preco
-                                  ? `R$ ${peca.preco.toLocaleString("pt-BR")}`
-                                  : "sob consulta"}
-                            </p>
-                          </div>
-                          <div className="shrink-0 border border-ouro/40 px-3 py-2 text-center">
-                            <p className="text-lg leading-none text-ambar">
-                              {String(i + 1).padStart(2, "0")}
-                            </p>
-                            <p className="mt-1 text-[0.6rem] uppercase tracking-[0.18em] text-osso/55">
-                              {peca.estado === "vendida" ? "vendida" : "única"}
-                            </p>
-                          </div>
-                        </div>
-                        {peca.estado === "vendida" ? (
-                          <Cta
-                            cta={`peca-vendida-${peca.slug}`}
-                            href="#encomenda"
-                            className="btn-card mt-4"
-                          >
-                            Encomende a sua <span aria-hidden>→</span>
-                          </Cta>
-                        ) : (
-                          <Cta
-                            cta={`peca-${peca.slug}`}
-                            href={waPeca(peca, i + 1)}
-                            novaAba
-                            className="btn-card mt-4"
-                          >
-                            Quero essa <span aria-hidden>→</span>
-                          </Cta>
-                        )}
-                      </div>
-                    </article>
+                    <PecaCard peca={peca} />
                   </Reveal>
                 </div>
               ))}
             </div>
-            <div className="mt-8 flex justify-end">
+            <div className="mt-8 flex flex-wrap justify-end gap-4">
+              <Cta cta="galeria-acervo" href="/pecas" className="btn-outline">
+                Ver acervo completo <span aria-hidden>→</span>
+              </Cta>
               <Cta cta="galeria-encomendar" href="#encomenda" className="btn-outline">
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
@@ -310,8 +290,8 @@ export default function Home() {
               Uma peça. Uma história. Uma vez.
             </p>
             <p className="mt-4 max-w-sm text-osso/70">
-              Cada objeto nasce para existir uma única vez. Vendeu, acabou —
-              fica registrado aqui como parte do acervo.
+              Cada objeto nasce para existir uma única vez. Vendeu, acabou.
+              Fica registrado aqui como parte do acervo.
             </p>
           </div>
           <div className="relative lg:col-span-5">
@@ -393,9 +373,6 @@ export default function Home() {
               Em um mundo de objetos produzidos em massa, escolhemos fazer
               diferente. Criamos peças para quem procura o que não se encontra
               em qualquer lugar.
-            </p>
-            <p className="font-display mt-6 text-3xl italic text-ambar sm:text-4xl">
-              Nada aqui se repete.
             </p>
           </div>
         </Reveal>
@@ -485,7 +462,7 @@ export default function Home() {
               <Cta cta="final-encomendar" href="#encomenda" className="btn-ambar">
                 Montar minha peça
               </Cta>
-              <Cta cta="final-ver-pecas" href="#pecas" className="btn-outline">
+              <Cta cta="final-ver-pecas" href="/pecas" className="btn-outline">
                 Ver peças
               </Cta>
             </div>
@@ -494,7 +471,7 @@ export default function Home() {
             {[
               {
                 q: "Qual o prazo de uma encomenda?",
-                a: "Cada peça tem o seu tempo — o prazo é combinado na conversa, na aprovação da ideia. Peças prontas saem para entrega em seguida.",
+                a: "Cada peça tem o seu tempo: o prazo é combinado na conversa, na aprovação da ideia. Peças prontas saem para entrega em seguida.",
               },
               {
                 q: "Vocês enviam para onde?",
@@ -502,7 +479,7 @@ export default function Home() {
               },
               {
                 q: "Como cuido da minha peça?",
-                a: "Limpe com pano seco e macio, sem produtos abrasivos. Evite sol direto e umidade — grafite e folha dourada gostam de luz indireta.",
+                a: "Limpe com pano seco e macio, sem produtos abrasivos. Evite sol direto e umidade: grafite e folha dourada gostam de luz indireta.",
               },
             ].map((item) => (
               <details key={item.q} className="group border-b border-ouro/25 pb-2">
@@ -520,36 +497,7 @@ export default function Home() {
       </section>
 
       {/* ── 08. Footer ──────────────────────────────────────────── */}
-      <footer className="border-t border-ouro/25">
-        {/* pb extra no mobile: a sticky bar nunca cobre os links do rodapé */}
-        <div className="flex flex-wrap items-end justify-between gap-8 px-5 pt-14 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:px-12 lg:px-20 lg:pb-14">
-          <div>
-            <p className="font-display text-4xl italic">vérít.lab</p>
-            <p className="font-marker mt-2 -rotate-1 text-xl text-rosa">
-              nothing repeat.
-            </p>
-            <p className="eyebrow mt-3 text-osso/55">{site.cidade} · PR</p>
-          </div>
-          <nav className="flex gap-8">
-            <a
-              href={site.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
-            >
-              Instagram
-            </a>
-            <a
-              href={waGeral()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
-            >
-              WhatsApp
-            </a>
-          </nav>
-        </div>
-      </footer>
+      <SiteFooter />
 
       {/* barra fixa de conversão — só mobile */}
       <StickyCta />

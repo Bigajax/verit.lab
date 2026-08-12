@@ -85,7 +85,7 @@ export default function FormEncomenda() {
           />
           <span className="text-xs text-osso/60">
             Pode ser uma frase pronta, uma referência do feed ou só um
-            sentimento — a vérít desenha a partir daí.
+            sentimento. A vérít desenha a partir daí.
           </span>
         </label>
 
@@ -154,7 +154,7 @@ export default function FormEncomenda() {
             Enviar pelo WhatsApp <span aria-hidden>→</span>
           </button>
           <p className="max-w-60 text-xs leading-relaxed text-osso/60">
-            Sem cadastro: abre o seu WhatsApp com a ficha pronta — seu número
+            Sem cadastro: abre o seu WhatsApp com a ficha pronta. Seu número
             já vai junto na mensagem.
           </p>
         </div>
