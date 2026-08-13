@@ -1,5 +1,6 @@
 import Link from "next/link";
 import HeaderFixo from "@/components/HeaderFixo";
+import RabiscoHover from "@/components/RabiscoHover";
 import { site } from "@/data/site.config";
 
 // Header das páginas internas (/pecas, /pecas/[slug]) — mesmo desenho
@@ -32,15 +33,17 @@ export default function SiteHeader() {
       <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
         <Link
           href="/pecas"
-          className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+          className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
         >
           Peças
+          <RabiscoHover />
         </Link>
         <Link
           href="/#encomenda"
-          className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+          className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
         >
           Encomendar
+          <RabiscoHover />
         </Link>
         {/* acesso do dono: /admin/login digitado direto */}
       </nav>

@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import FormEncomenda from "@/components/FormEncomenda";
 import HeaderFixo from "@/components/HeaderFixo";
 import PecaCard from "@/components/PecaCard";
+import RabiscoHover from "@/components/RabiscoHover";
 import SiteFooter from "@/components/SiteFooter";
 import { getDestaques } from "@/lib/pecas.server";
 import { site } from "@/data/site.config";
@@ -84,15 +85,17 @@ export default async function Home() {
           <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
             <Link
               href="/pecas"
-              className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+              className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
             >
               Peças
+              <RabiscoHover />
             </Link>
             <a
               href="#encomenda"
-              className="eyebrow inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
+              className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
             >
               Encomendar
+              <RabiscoHover />
             </a>
             {/* acesso do dono: /admin/login digitado direto */}
           </nav>
@@ -154,9 +157,17 @@ export default async function Home() {
         <div className="relative z-10 flex w-full flex-1 flex-col px-5 pt-[5.5rem] sm:px-12 lg:justify-center lg:px-20 lg:pt-0">
           <div className="lg:max-w-[46%] lg:pl-[3vw]">
             {/* kicker: o que a vérít vende, em 1 segundo — 1 linha em 360px */}
-            <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.14em] text-ambar sm:text-[0.7rem] sm:tracking-[0.18em]">
-              Espelhos · Quadros · Objetos
-              <span className="hidden sm:inline"> · Feitos à mão</span>
+            <p className="mb-5 flex flex-wrap items-center gap-x-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-ambar sm:gap-x-2 sm:text-[0.7rem] sm:tracking-[0.18em]">
+              <span>Espelhos</span>
+              <span aria-hidden className="text-rosa">·</span>
+              <span>Quadros</span>
+              <span aria-hidden className="text-rosa">·</span>
+              <span>Objetos</span>
+              <span aria-hidden className="hidden text-rosa sm:inline">·</span>
+              {/* o "feito à mão" escrito à mão */}
+              <span className="font-marker hidden -rotate-2 text-base normal-case tracking-normal text-rosa sm:inline">
+                Feitos à mão
+              </span>
             </p>
             {/* H1 em 2 linhas fixas — quebra manual, nunca 4 linhas */}
             <h1 className="font-extrabold uppercase leading-[0.92] tracking-tight">
