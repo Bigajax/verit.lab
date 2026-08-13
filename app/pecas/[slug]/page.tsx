@@ -5,6 +5,7 @@ import Cta from "@/components/Cta";
 import FechamentoCta from "@/components/FechamentoCta";
 import GaleriaPeca from "@/components/GaleriaPeca";
 import PecaCard from "@/components/PecaCard";
+import RabiscoHover from "@/components/RabiscoHover";
 import Reveal from "@/components/Reveal";
 import SiteFooter from "@/components/SiteFooter";
 import SiteHeader from "@/components/SiteHeader";
@@ -100,9 +101,10 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
         {/* migalha discreta de volta ao catálogo */}
         <Link
           href="/pecas"
-          className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
+          className="eyebrow group relative inline-flex min-h-11 items-center hover:text-ambar"
         >
           ← Todas as peças
+          <RabiscoHover />
         </Link>
 
         <div className="mt-6 gap-14 lg:grid lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
@@ -125,8 +127,25 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
               </span>
             </p>
 
+            {/* nome com o sublinhado de pincel do hero, na largura do texto */}
             <h1 className="mt-5 text-4xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl">
-              {peca.nome}
+              <span className="inline-block">
+                {peca.nome}
+                <svg
+                  aria-hidden
+                  viewBox="0 0 300 14"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  className="mt-2 block h-2.5 w-full text-ambar"
+                >
+                  <path
+                    d="M4 9 C 60 3, 150 12, 296 5"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
             </h1>
 
             {peca.frase && (
@@ -176,7 +195,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
               cta={vendida ? `peca-vendida-${peca.slug}` : `peca-quero-${peca.slug}`}
               href={vendida ? waPecaVendida(peca) : waPecaPagina(peca)}
               novaAba
-              className="btn-ambar mt-9 w-full"
+              className="btn-ambar mt-9 w-full -rotate-1 transition-all! duration-200 hover:rotate-0 hover:brightness-110"
             >
               {vendida ? (
                 <>
@@ -188,17 +207,41 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
                 </>
               )}
             </Cta>
-            <p className="mt-3 text-xs text-osso/60">
+            <p className="mt-3 text-xs text-osso/[0.62]">
               Sem cadastro. Abre direto no WhatsApp.
             </p>
 
             <Link
               href="/pecas"
-              className="btn-card mt-6"
+              className="btn-card mt-6 rotate-1 transition-all! duration-200 hover:rotate-0"
               data-cta={`peca-ver-todas-${peca.slug}`}
             >
               Ver todas as peças <span aria-hidden>→</span>
             </Link>
+
+            {/* selo girando preenche o respiro da coluna no desktop */}
+            <svg
+              aria-hidden
+              viewBox="0 0 120 120"
+              className="mt-10 hidden w-28 animate-[girar_20s_linear_infinite] text-rosa/70 motion-reduce:animate-none lg:block"
+            >
+              <defs>
+                <path
+                  id="circ-peca"
+                  d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"
+                />
+              </defs>
+              <text
+                fontSize="13.5"
+                fontWeight="800"
+                letterSpacing="2.2"
+                fill="currentColor"
+              >
+                <textPath href="#circ-peca">
+                  nothing repeat · nothing repeat ·
+                </textPath>
+              </text>
+            </svg>
           </div>
         </div>
       </section>
