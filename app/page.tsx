@@ -171,12 +171,13 @@ export default async function Home() {
             </p>
             {/* H1 em 2 linhas fixas — quebra manual, nunca 4 linhas */}
             <h1 className="font-extrabold uppercase leading-[0.92] tracking-tight">
-              <span className="block text-[clamp(2.7rem,12.5vw,4.8rem)] lg:text-[clamp(3.5rem,7vw,6.5rem)]">
+              {/* nowrap + escala por vw: "NADA AQUI" nunca quebra em 2 linhas */}
+              <span className="block whitespace-nowrap text-[clamp(2.7rem,12vw,4.8rem)] lg:text-[clamp(3rem,5.6vw,5.5rem)]">
                 Nada aqui
               </span>
               {/* inline-block: o sublinhado acompanha a largura de "se repete." */}
               <span className="inline-block -rotate-1 pt-2">
-                <span className="font-marker block text-[clamp(2.5rem,11.5vw,4.4rem)] font-normal tracking-normal text-ambar lg:text-[clamp(3.2rem,6.4vw,6rem)]">
+                <span className="font-marker block whitespace-nowrap text-[clamp(2.5rem,11vw,4.4rem)] font-normal tracking-normal text-ambar lg:text-[clamp(2.9rem,5.2vw,5.2rem)]">
                   Se repete.
                 </span>
                 <svg
@@ -199,19 +200,19 @@ export default async function Home() {
               Peças únicas, feitas à mão, para espaços que também têm
               personalidade.
             </p>
-            {/* CTAs compactos no mobile: empilhados, ≤120px somados */}
+            {/* CTAs compactos no mobile; etiquetas meio tortas que endireitam no hover */}
             <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
               <Cta
                 cta="hero-ver-pecas"
                 href="/pecas"
-                className="btn-ambar w-full py-3.5! sm:w-auto sm:py-4!"
+                className="btn-ambar w-full -rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:brightness-110 sm:w-auto sm:py-4!"
               >
                 Ver peças <span aria-hidden>→</span>
               </Cta>
               <Cta
                 cta="hero-encomendar"
                 href="#encomenda"
-                className="btn-outline w-full py-3.5! sm:w-auto sm:py-4!"
+                className="btn-outline w-full rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto! sm:w-auto sm:py-4!"
               >
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
@@ -315,11 +316,20 @@ export default async function Home() {
                 </Reveal>
               ))}
             </div>
+            {/* etiquetas coladas meio tortas; no hover endireitam e pintam */}
             <div className="mt-8 flex flex-wrap justify-end gap-4">
-              <Cta cta="galeria-acervo" href="/pecas" className="btn-outline">
+              <Cta
+                cta="galeria-acervo"
+                href="/pecas"
+                className="btn-outline -rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto!"
+              >
                 Ver acervo completo <span aria-hidden>→</span>
               </Cta>
-              <Cta cta="galeria-encomendar" href="#encomenda" className="btn-outline">
+              <Cta
+                cta="galeria-encomendar"
+                href="#encomenda"
+                className="btn-outline rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto!"
+              >
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
             </div>
@@ -350,9 +360,27 @@ export default async function Home() {
                 strokeLinecap="round"
               />
             </svg>
-            {/* rosa: uso 2 de 2 */}
-            <p className="font-marker mt-6 -rotate-2 text-xl text-rosa">
-              uma vez só.
+            {/* "uma vez só." circulado à caneta, como quem insiste no ponto */}
+            <p className="mt-8 inline-block">
+              <span className="relative inline-block px-5 py-3">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 220 74"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  className="absolute inset-0 h-full w-full text-rosa"
+                >
+                  <path
+                    d="M28 37 C 24 14, 120 6, 186 18 C 214 24, 210 52, 150 62 C 90 70, 20 62, 18 44 C 17 34, 40 26, 60 24"
+                    stroke="currentColor"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <span className="font-marker relative -rotate-2 inline-block text-2xl text-rosa sm:text-3xl">
+                  uma vez só.
+                </span>
+              </span>
             </p>
             <p className="font-display mt-8 text-2xl leading-snug sm:text-3xl">
               Uma peça. Uma história. Uma vez.
@@ -382,6 +410,15 @@ export default async function Home() {
                   placeholder="blur"
                   sizes="160px"
                   className="object-cover"
+                />
+                {/* fitas adesivas segurando a foto, como colagem de atelier */}
+                <span
+                  aria-hidden
+                  className="absolute -top-2 -left-3 h-5 w-14 -rotate-45 bg-osso/30"
+                />
+                <span
+                  aria-hidden
+                  className="absolute -bottom-2 -right-3 h-5 w-14 -rotate-45 bg-osso/30"
                 />
               </div>
             </div>

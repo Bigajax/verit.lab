@@ -36,7 +36,7 @@ export default function PecaCard({
             fill
             sizes={sizes}
             className={`object-cover ${
-              vendida ? "brightness-75 saturate-[0.45]" : ""
+              vendida || reservada ? "brightness-75 saturate-[0.45]" : ""
             }`}
           />
         )}
@@ -51,12 +51,29 @@ export default function PecaCard({
           }}
         />
 
+        {/* véu escuro extra: o carimbo precisa aparecer em qualquer foto */}
+        {(vendida || reservada) && (
+          <div aria-hidden className="absolute inset-0 bg-preto/45" />
+        )}
+
+        {/* carimbo manuscrito atravessado: rosa = vendida, ouro = reservada */}
+        {(vendida || reservada) && (
+          <p
+            aria-hidden
+            className={`font-marker absolute inset-0 flex -rotate-12 items-center justify-center text-3xl lg:text-4xl ${
+              vendida ? "text-rosa" : "text-ouro"
+            }`}
+          >
+            {vendida ? "vendida" : "reservada"}
+          </p>
+        )}
+
         {/* badge do acervo */}
         <div className="absolute right-2.5 top-2.5 border border-ouro/40 bg-preto/55 px-1.5 py-1 text-center">
           <p className="text-sm leading-none text-ambar">{peca.numero}</p>
           <p
             className={`mt-0.5 text-[8px] uppercase tracking-[0.14em] ${
-              vendida || reservada ? "text-rosa" : "text-ambar"
+              vendida ? "text-rosa" : reservada ? "text-ouro" : "text-ambar"
             }`}
           >
             {vendida ? "vendida" : reservada ? "reservada" : "única"}
@@ -73,7 +90,11 @@ export default function PecaCard({
               {rotuloTipo(peca)} · {peca.dimensoes}
             </p>
             {vendida || reservada ? (
-              <p className="mt-1 text-[15px] font-semibold leading-none text-rosa">
+              <p
+                className={`mt-1 text-[15px] font-semibold leading-none ${
+                  vendida ? "text-rosa" : "text-ouro"
+                }`}
+              >
                 {vendida ? "vendida" : "reservada"}
               </p>
             ) : temDesconto(peca) ? (
