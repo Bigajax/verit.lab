@@ -23,6 +23,37 @@ import tintaCor from "@/public/images/deco/tinta-cor.png";
 // (ou na hora, via revalidatePath, quando o admin salvar algo).
 export const revalidate = 60;
 
+// Seta de scroll rabiscada à mão — mesmo traço do sublinhado do H1, em rosa.
+function SetaRabiscada({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 40 60"
+      fill="none"
+      className={`-rotate-6 ${className ?? ""}`}
+    >
+      <path
+        d="M21 4 C 15 18, 26 30, 19 48"
+        stroke="currentColor"
+        strokeWidth="5.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M9 40 C 12 45, 16 49, 19 52"
+        stroke="currentColor"
+        strokeWidth="5.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M31 38 C 27 43, 23 48, 19 52"
+        stroke="currentColor"
+        strokeWidth="5.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default async function Home() {
   // A home mostra só os destaques (máx. 8) — o acervo completo vive em /pecas.
   const pecas = await getDestaques();
@@ -174,22 +205,22 @@ export default async function Home() {
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
             </div>
-            {/* seta desktop: intocada */}
+            {/* seta desktop */}
             <a
               href="#pecas"
               aria-label="Descer para a galeria"
-              className="mt-16 hidden h-11 w-11 items-center justify-center rounded-full border border-osso/30 text-osso/60 transition-colors [animation:flutuar_2.6s_ease-in-out_infinite] hover:border-ambar hover:text-ambar motion-reduce:animate-none lg:inline-flex"
+              className="mt-14 hidden text-rosa transition-opacity [animation:flutuar_2.6s_ease-in-out_infinite] hover:opacity-75 motion-reduce:animate-none lg:inline-block"
             >
-              ↓
+              <SetaRabiscada className="h-14 w-auto" />
             </a>
           </div>
           {/* seta mobile: ancorada no rodapé do hero */}
           <a
             href="#pecas"
             aria-label="Descer para a galeria"
-            className="mb-6 mt-auto inline-flex h-9 w-9 items-center justify-center self-start rounded-full border border-osso/30 text-osso/60 [animation:flutuar_2.6s_ease-in-out_infinite] motion-reduce:animate-none lg:hidden"
+            className="mb-6 mt-auto inline-block self-start text-rosa [animation:flutuar_2.6s_ease-in-out_infinite] motion-reduce:animate-none lg:hidden"
           >
-            ↓
+            <SetaRabiscada className="h-10 w-auto" />
           </a>
         </div>
       </section>
