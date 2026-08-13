@@ -4,6 +4,7 @@ import {
   type Peca,
   capa,
   formataReais,
+  percentualDesconto,
   rotuloTipo,
   temDesconto,
 } from "@/lib/pecas";
@@ -65,6 +66,16 @@ export default function PecaCard({
             }`}
           >
             {vendida ? "vendida" : "reservada"}
+          </p>
+        )}
+
+        {/* selo de oferta: percentual rabiscado em rosa, meio torto */}
+        {temDesconto(peca) && (
+          <p
+            aria-hidden
+            className="font-marker absolute left-2.5 top-2.5 -rotate-6 bg-preto/55 px-2 py-0.5 text-xl text-rosa lg:text-2xl"
+          >
+            -{percentualDesconto(peca)}%
           </p>
         )}
 
