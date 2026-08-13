@@ -182,9 +182,14 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
               </p>
             )}
 
-            {peca.descricao && (
+            {peca.descricao ? (
               <p className="font-display mt-6 max-w-md text-xl leading-snug text-osso/85">
                 {peca.descricao}
+              </p>
+            ) : (
+              /* sem descrição cadastrada: a assinatura da casa segura o espaço */
+              <p className="font-marker mt-6 -rotate-1 text-xl text-osso/70">
+                feita à mão, uma vez só.
               </p>
             )}
 
