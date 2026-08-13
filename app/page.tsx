@@ -3,6 +3,7 @@ import Link from "next/link";
 import Cta from "@/components/Cta";
 import Reveal from "@/components/Reveal";
 import FormEncomenda from "@/components/FormEncomenda";
+import HeaderFixo from "@/components/HeaderFixo";
 import PecaCard from "@/components/PecaCard";
 import SiteFooter from "@/components/SiteFooter";
 import { getDestaques } from "@/lib/pecas.server";
@@ -28,12 +29,8 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-clip">
-      {/* linha fina de parede de galeria */}
-      <div aria-hidden className="fixed inset-y-0 left-6 z-10 hidden w-px bg-ouro/10 lg:block" />
-
-      {/* header fixo e transparente: só um degradê segura a legibilidade */}
-      <header className="sticky top-0 z-40 bg-gradient-to-b from-preto/80 via-preto/40 to-transparent">
-        <div className="flex w-full items-center justify-between gap-4 px-5 py-4 sm:px-12 lg:px-20">
+      {/* header fixo: transparente no topo, fundo escuro ao rolar */}
+      <HeaderFixo>
           <p className="shrink-0 font-display text-2xl italic">vérít.lab</p>
           <nav
             aria-label="Categorias"
@@ -68,8 +65,7 @@ export default async function Home() {
             </a>
             {/* acesso do dono: /admin/login digitado direto */}
           </nav>
-        </div>
-      </header>
+      </HeaderFixo>
 
       {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
       {/* mobile: 100svh (sem pulo da barra do Safari) menos o header em fluxo */}
@@ -77,8 +73,9 @@ export default async function Home() {
         id="hero"
         className="relative flex min-h-[calc(100svh-4.75rem)] flex-col lg:min-h-[88vh]"
       >
-        {/* foto: fundo inteiro no mobile; metade direita no desktop */}
-        <div className="absolute inset-0 z-0 lg:left-auto lg:right-6 lg:w-[52%]">
+        {/* foto: fundo inteiro no mobile; metade direita no desktop.
+            -top: sobe atrás do header transparente até o topo da página */}
+        <div className="absolute inset-x-0 -top-[4.75rem] bottom-0 z-0 lg:left-auto lg:right-0 lg:w-[56%]">
           <Image
             src={fotoSala}
             alt="Sala escura da vérít.lab com quadros e espelhos grafitados iluminados"
@@ -86,7 +83,7 @@ export default async function Home() {
             preload
             placeholder="blur"
             sizes="(min-width: 1024px) 54vw, 100vw"
-            className="object-cover object-[62%_center] lg:object-center lg:[mask-image:linear-gradient(to_right,transparent,black_32%)]"
+            className="object-cover object-[62%_center] lg:object-center lg:[mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.35)_28%,rgba(0,0,0,0.75)_45%,black_62%)]"
           />
           {/* scrim mobile: texto na faixa escura de cima, foto respira no meio */}
           <div
@@ -106,22 +103,13 @@ export default async function Home() {
                 "linear-gradient(to bottom, #100d0a 0%, rgba(16,13,10,0.72) 50%, transparent 100%)",
             }}
           />
-          {/* garante legibilidade do H1 sobre qualquer foto futura;
-              o lado direito mantém o brilho atual */}
-          <div
-            aria-hidden
-            className="absolute inset-0 hidden lg:block"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(10,8,6,0.96) 0%, rgba(10,8,6,0.85) 38%, rgba(10,8,6,0) 68%)",
-            }}
-          />
         </div>
 
-        {/* tinta escorrendo do topo — decorativa, só no desktop: carrega lazy */}
+        {/* tinta escorrendo do topo — decorativa, só no desktop: carrega lazy.
+            -top: nasce atrás do header transparente, sem corte seco */}
         <div
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 z-0 hidden w-[44%] opacity-50 lg:block"
+          className="pointer-events-none absolute left-0 -top-[4.75rem] z-0 hidden w-[44%] opacity-50 lg:block"
         >
           <Image
             src={tintaCor}
@@ -364,7 +352,7 @@ export default async function Home() {
         id="encomenda"
         className="scroll-mt-10 border-y border-ouro/25 bg-osso/[0.03]"
       >
-        <div className="grid gap-14 px-5 py-24 sm:px-12 lg:px-20 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+        <div className="grid gap-14 px-4 py-16 sm:px-12 sm:py-24 lg:px-20 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
           <div>
             <p className="eyebrow mb-4">Peças sob encomenda</p>
             <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
@@ -403,11 +391,11 @@ export default async function Home() {
       </section>
 
       {/* ── 05. Essência — curta ────────────────────────────────── */}
-      <section className="px-5 py-24 sm:px-12 lg:px-20 lg:py-32">
+      <section className="px-5 py-16 sm:px-12 sm:py-24 lg:px-20 lg:py-32">
         <Reveal>
           <div className="max-w-2xl border-l border-ouro/40 pl-6 sm:pl-10">
             <p className="eyebrow mb-6">Sobre a vérít</p>
-            <p className="font-display text-3xl leading-snug sm:text-4xl">
+            <p className="font-display text-xl leading-[1.45] sm:text-4xl sm:leading-snug">
               Em um mundo de objetos produzidos em massa, escolhemos fazer
               diferente. Criamos peças para quem procura o que não se encontra
               em qualquer lugar.

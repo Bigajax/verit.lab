@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeaderFixo from "@/components/HeaderFixo";
 import { site } from "@/data/site.config";
 
 // Header das páginas internas (/pecas, /pecas/[slug]) — mesmo desenho
@@ -6,11 +7,10 @@ import { site } from "@/data/site.config";
 // linkando as categorias, e a navegação principal sempre visível.
 export default function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 bg-gradient-to-b from-preto/80 via-preto/40 to-transparent">
-      <div className="flex w-full items-center justify-between gap-4 px-5 py-4 sm:px-12 lg:px-20">
-        <Link href="/" className="shrink-0 font-display text-2xl italic">
-          vérít.lab
-        </Link>
+    <HeaderFixo>
+      <Link href="/" className="shrink-0 font-display text-2xl italic">
+        vérít.lab
+      </Link>
       <nav
         aria-label="Categorias"
         className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex"
@@ -44,7 +44,6 @@ export default function SiteHeader() {
         </Link>
         {/* acesso do dono: /admin/login digitado direto */}
       </nav>
-      </div>
-    </header>
+    </HeaderFixo>
   );
 }

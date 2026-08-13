@@ -108,10 +108,12 @@ body {
   color: var(--osso);
   padding: 0.85rem 1rem;
   border-radius: 2px;
+  /* nunca abaixo de 16px: evita o zoom automático do Safari iOS ao focar */
+  font-size: 1rem;
 }
 
 .campo::placeholder {
-  color: color-mix(in srgb, var(--osso) 40%, transparent);
+  color: color-mix(in srgb, var(--osso) 42%, transparent);
 }
 
 .campo:focus {

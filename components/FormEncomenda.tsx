@@ -42,25 +42,27 @@ export default function FormEncomenda() {
       className="border border-ouro/30 bg-osso/[0.02]"
     >
       {/* cabeçalho da ficha */}
-      <div className="flex items-center justify-between gap-4 border-b border-ouro/30 px-6 py-4 sm:px-8">
+      <div className="flex items-center justify-between gap-4 border-b border-ouro/30 px-4 py-4 sm:px-8">
         <p className="eyebrow">Ficha de encomenda</p>
         <span className="font-marker -rotate-2 text-lg text-rosa">
           peça única
         </span>
       </div>
 
-      <div className="grid gap-9 p-6 sm:p-8">
+      <div className="grid gap-8 p-4 sm:gap-9 sm:p-8">
         <fieldset>
-          <legend className="eyebrow mb-4">
+          {/* tracking menor no mobile: label nunca quebra em 2 linhas */}
+          <legend className="eyebrow mb-4 leading-[1.4] tracking-[0.08em]! sm:tracking-[0.28em]!">
             <Num n="01" />
             Tipo de peça
           </legend>
-          <div className="flex flex-wrap gap-2">
+          {/* 2 colunas no mobile: sem opção órfã */}
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             {TIPOS.map((t) => (
               <button
                 key={t}
                 type="button"
-                className="pill"
+                className="pill min-h-12! sm:min-h-11!"
                 data-on={tipo === t}
                 aria-pressed={tipo === t}
                 onClick={() => setTipo(t)}
@@ -73,33 +75,34 @@ export default function FormEncomenda() {
 
         {/* o coração da ficha */}
         <label className="grid gap-3">
-          <span className="eyebrow">
+          <span className="eyebrow leading-[1.4] tracking-[0.08em]! sm:tracking-[0.28em]!">
             <Num n="02" />
             Que frase ou ideia você quer na peça?
           </span>
           <textarea
-            className="campo min-h-32 resize-y text-base"
+            className="campo min-h-[120px] resize-y text-base sm:min-h-32"
+            rows={4}
             value={ideia}
             onChange={(e) => setIdeia(e.target.value)}
-            placeholder={'Ex.: "nem tudo precisa fazer sentido", uma referência, um sentimento…'}
+            placeholder={'Ex.: "nem tudo precisa fazer sentido"'}
           />
-          <span className="text-xs text-osso/60">
+          <span className="text-xs text-osso/[0.62]">
             Pode ser uma frase pronta, uma referência do feed ou só um
             sentimento. A vérít desenha a partir daí.
           </span>
         </label>
 
         <fieldset>
-          <legend className="eyebrow mb-4">
+          <legend className="eyebrow mb-4 leading-[1.4] tracking-[0.08em]! sm:tracking-[0.28em]!">
             <Num n="03" />
             Onde vai ficar
           </legend>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
             {LOCAIS.map((l) => (
               <button
                 key={l}
                 type="button"
-                className="pill"
+                className="pill min-h-12! sm:min-h-11!"
                 data-on={local === l}
                 aria-pressed={local === l}
                 onClick={() => setLocal(l)}
@@ -111,7 +114,7 @@ export default function FormEncomenda() {
         </fieldset>
 
         <label className="grid gap-3">
-          <span className="eyebrow">
+          <span className="eyebrow leading-[1.4] tracking-[0.08em]! sm:tracking-[0.28em]!">
             <Num n="04" />
             Qual peça do feed te inspirou?{" "}
             <span className="normal-case tracking-normal opacity-60">
@@ -127,7 +130,7 @@ export default function FormEncomenda() {
         </label>
 
         <label className="grid gap-3">
-          <span className="eyebrow">
+          <span className="eyebrow leading-[1.4] tracking-[0.08em]! sm:tracking-[0.28em]!">
             <Num n="05" />
             Seu nome{" "}
             <span className="normal-case tracking-normal opacity-60">
@@ -153,7 +156,7 @@ export default function FormEncomenda() {
           <button type="submit" className="btn-rosa w-full sm:w-auto">
             Enviar pelo WhatsApp <span aria-hidden>→</span>
           </button>
-          <p className="max-w-60 text-xs leading-relaxed text-osso/60">
+          <p className="max-w-60 text-xs leading-relaxed text-osso/[0.62]">
             Sem cadastro: abre o seu WhatsApp com a ficha pronta. Seu número
             já vai junto na mensagem.
           </p>
