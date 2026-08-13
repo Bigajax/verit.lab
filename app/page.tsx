@@ -5,7 +5,6 @@ import Reveal from "@/components/Reveal";
 import FormEncomenda from "@/components/FormEncomenda";
 import PecaCard from "@/components/PecaCard";
 import SiteFooter from "@/components/SiteFooter";
-import StickyCta from "@/components/StickyCta";
 import { getDestaques } from "@/lib/pecas.server";
 import { site } from "@/data/site.config";
 
@@ -239,8 +238,9 @@ export default async function Home() {
       {/* ── 02. Galeria — peças únicas ──────────────────────────── */}
       <section id="pecas" className="scroll-mt-10 px-5 pt-24 sm:px-12 lg:px-20 lg:pt-36">
         <div className="gap-12 lg:grid lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)]">
-          {/* trilho esquerdo */}
-          <div className="mb-14 lg:sticky lg:top-16 lg:mb-0 lg:self-start">
+          {/* trilho esquerdo — compacto no mobile: a primeira peça precisa
+              aparecer ao final da primeira rolagem da seção */}
+          <div className="mb-7 lg:sticky lg:top-16 lg:mb-0 lg:self-start">
             <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
               <span className="block text-6xl sm:text-7xl">Peças</span>
               <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ambar sm:text-6xl">
@@ -250,7 +250,7 @@ export default async function Home() {
             <p className="mt-6 max-w-56 text-osso/70">
               Cada uma existe uma única vez. Vendeu, não volta.
             </p>
-            <p className="eyebrow mt-4 max-w-52 text-osso/55">
+            <p className="eyebrow mt-4 hidden max-w-52 text-osso/55 lg:block">
               quantidade limitada · consulte disponibilidade
             </p>
             {/* carimbo nothing repeat */}
@@ -268,15 +268,21 @@ export default async function Home() {
             </svg>
           </div>
 
-          {/* cards — foto padronizada em 4:5 (mata CLS na rolagem) */}
+          {/* cards — overlay 4:5; 2 colunas no mobile (1ª peça em largura
+              cheia), 3 no desktop */}
           <div>
-            <div className="columns-1 gap-6 sm:columns-2">
-              {pecas.map((peca) => (
-                <div key={peca.slug} className="mb-6 break-inside-avoid">
-                  <Reveal>
-                    <PecaCard peca={peca} />
-                  </Reveal>
-                </div>
+            <div className="grid grid-cols-2 gap-x-2.5 gap-y-3.5 sm:gap-6 lg:grid-cols-3 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1">
+              {pecas.map((peca, i) => (
+                <Reveal key={peca.slug}>
+                  <PecaCard
+                    peca={peca}
+                    sizes={
+                      i === 0
+                        ? "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                        : "(min-width: 1024px) 30vw, 50vw"
+                    }
+                  />
+                </Reveal>
               ))}
             </div>
             <div className="mt-8 flex flex-wrap justify-end gap-4">
@@ -530,9 +536,6 @@ export default async function Home() {
 
       {/* ── 08. Footer ──────────────────────────────────────────── */}
       <SiteFooter />
-
-      {/* barra fixa de conversão — só mobile */}
-      <StickyCta />
     </main>
   );
 }

@@ -90,10 +90,17 @@ export default function CatalogoPecas({ pecas }: { pecas: Peca[] }) {
           </Cta>
         </div>
       ) : (
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtradas.map((peca) => (
+        <div className="mt-7 grid grid-cols-2 gap-x-2.5 gap-y-3.5 sm:gap-6 lg:grid-cols-3 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1">
+          {filtradas.map((peca, i) => (
             <Reveal key={peca.id}>
-              <PecaCard peca={peca} />
+              <PecaCard
+                peca={peca}
+                sizes={
+                  i === 0
+                    ? "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                    : "(min-width: 1024px) 30vw, 50vw"
+                }
+              />
             </Reveal>
           ))}
         </div>

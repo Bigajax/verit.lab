@@ -22,11 +22,19 @@ export const metadata: Metadata = {
 // servidor — é isso que vai no HTML estático e no que os buscadores leem.
 function GridPadrao({ pecas }: { pecas: Peca[] }) {
   return (
-    <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="mt-7 grid grid-cols-2 gap-x-2.5 gap-y-3.5 sm:gap-6 lg:grid-cols-3 [&>*:first-child]:col-span-2 sm:[&>*:first-child]:col-span-1">
       {pecas
         .filter((peca) => peca.status !== "vendida")
-        .map((peca) => (
-          <PecaCard key={peca.id} peca={peca} />
+        .map((peca, i) => (
+          <PecaCard
+            key={peca.id}
+            peca={peca}
+            sizes={
+              i === 0
+                ? "(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
+                : "(min-width: 1024px) 30vw, 50vw"
+            }
+          />
         ))}
     </div>
   );

@@ -5,8 +5,7 @@ import { waGeral } from "@/lib/whatsapp";
 export default function SiteFooter() {
   return (
     <footer className="border-t border-ouro/25">
-      {/* pb extra no mobile: a sticky bar nunca cobre os links do rodapé */}
-      <div className="flex flex-wrap items-end justify-between gap-8 px-5 pt-14 pb-[calc(3.5rem+env(safe-area-inset-bottom)+1.5rem)] sm:px-12 lg:px-20 lg:pb-14">
+      <div className="flex flex-wrap items-end justify-between gap-8 px-5 pt-14 pb-[calc(3.5rem+env(safe-area-inset-bottom))] sm:px-12 lg:px-20 lg:pb-14">
         <div>
           <p className="font-display text-4xl italic">vérít.lab</p>
           <p className="font-marker mt-2 -rotate-1 text-xl text-rosa">

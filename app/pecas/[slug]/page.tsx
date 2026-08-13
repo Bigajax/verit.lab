@@ -212,7 +212,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
               peças.
             </span>
           </h2>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 grid grid-cols-2 gap-x-2.5 gap-y-3.5 sm:gap-6 lg:grid-cols-3">
             {outras.map((outra) => (
               <Reveal key={outra.id}>
                 <PecaCard peca={outra} />
