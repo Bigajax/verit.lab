@@ -23,6 +23,8 @@ Vitrine + painel admin da vérít.lab (Maringá). Next.js (App Router) + Tailwin
 5. Crie o usuário do painel: *Authentication → Users → Add user* (email + senha, um único usuário).
 6. Na Vercel, cadastre as mesmas variáveis de ambiente do `.env.local`.
 
+> **Plano free pausa o projeto após ~7 dias sem uso.** Pausado, o Storage para de responder, o otimizador de imagem da Vercel devolve 502 e as fotos das peças somem. Enquanto isso a vitrine cai sozinha para as peças de exemplo (`lib/pecas.mock.ts`, fotos em `public/images/pecas`). Para despausar: painel do Supabase → *Restore project*. O cron de `vercel.json` chama `/api/keepalive` uma vez por dia para evitar a pausa (opcional: variável `CRON_SECRET` na Vercel para proteger a rota).
+
 ## Desenvolvimento
 
 ```bash
