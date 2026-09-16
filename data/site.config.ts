@@ -6,7 +6,15 @@ export const site = {
   cidade: "Maringá",
   descricao:
     "Laboratório de design contemporâneo. Espelhos, quadros e objetos únicos com frases em grafite. Nothing repeats.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://veritlab.com.br",
+  // URL absoluta (og:image, sitemap, links do WhatsApp). Sem
+  // NEXT_PUBLIC_SITE_URL, usa o domínio de produção que a Vercel injeta
+  // (troca sozinho para o domínio próprio quando ele for configurado).
+  // Um domínio que não resolve aqui = preview sem imagem no WhatsApp.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMERO ?? "5544997748888",
   instagram: "https://www.instagram.com/verit.lab/",
   instagramHandle: "@verit.lab",

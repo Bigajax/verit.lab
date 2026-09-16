@@ -28,10 +28,10 @@ export const metadata: Metadata = {
   title: "vérít.lab · Nada aqui se repete.",
   description: site.descricao,
   metadataBase: new URL(site.url),
+  // og:image vem de app/opengraph-image.tsx (a marca do favicon)
   openGraph: {
     title: "vérít.lab · Nada aqui se repete.",
     description: site.descricao,
-    images: ["/images/ambiente/sala.jpg"],
   },
 };
 
