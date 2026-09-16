@@ -17,65 +17,105 @@ function semSupabase() {
   return mock;
 }
 
+// Supabase configurado mas fora do ar (projeto pausado por inatividade
+// no plano free, DNS, rede): em vez de derrubar a página — ou pior,
+// deixar a ISR servir HTML velho apontando para fotos do Storage que o
+// otimizador de imagem não consegue mais buscar —, a vitrine cai para os
+// dados de exemplo, cujas fotos estão em /public/images/pecas. Na
+// próxima revalidação (60 s) com o banco respondendo, volta ao real.
+async function ouMock<T>(
+  rotulo: string,
+  consulta: () => Promise<T>,
+  mock: () => T,
+): Promise<T> {
+  if (semSupabase()) return mock();
+  try {
+    return await consulta();
+  } catch (erro) {
+    console.error(
+      `[verit] Supabase indisponível (${rotulo}) — servindo peças de exemplo.`,
+      erro instanceof Error ? erro.message : erro,
+    );
+    return mock();
+  }
+}
+
 function ordenaImagens<T extends { imagens: PecaImagem[] }>(peca: T): T {
   peca.imagens.sort((a, b) => a.ordem - b.ordem);
   return peca;
 }
 
 // Todas as peças do acervo, na ordenação manual do admin.
-export async function getPecas(): Promise<Peca[]> {
-  if (semSupabase()) return pecasMock;
-  const { data, error } = await supabasePublic()
-    .from("pecas")
-    .select(SELECT)
-    .order("ordem")
-    .order("numero");
-  if (error) throw new Error(`Supabase (pecas): ${error.message}`);
-  return (data as Peca[]).map(ordenaImagens);
+export function getPecas(): Promise<Peca[]> {
+  return ouMock(
+    "pecas",
+    async () => {
+      const { data, error } = await supabasePublic()
+        .from("pecas")
+        .select(SELECT)
+        .order("ordem")
+        .order("numero");
+      if (error) throw new Error(error.message);
+      return (data as Peca[]).map(ordenaImagens);
+    },
+    () => pecasMock,
+  );
 }
 
 // Destaques da home (máx. 8, controlado pelo admin).
-export async function getDestaques(): Promise<Peca[]> {
-  if (semSupabase()) return pecasMock.filter((p) => p.destaque).slice(0, 8);
-  const { data, error } = await supabasePublic()
-    .from("pecas")
-    .select(SELECT)
-    .eq("destaque", true)
-    .order("ordem")
-    .order("numero")
-    .limit(8);
-  if (error) throw new Error(`Supabase (destaques): ${error.message}`);
-  return (data as Peca[]).map(ordenaImagens);
+export function getDestaques(): Promise<Peca[]> {
+  return ouMock(
+    "destaques",
+    async () => {
+      const { data, error } = await supabasePublic()
+        .from("pecas")
+        .select(SELECT)
+        .eq("destaque", true)
+        .order("ordem")
+        .order("numero")
+        .limit(8);
+      if (error) throw new Error(error.message);
+      return (data as Peca[]).map(ordenaImagens);
+    },
+    () => pecasMock.filter((p) => p.destaque).slice(0, 8),
+  );
 }
 
-export async function getPecaPorSlug(slug: string): Promise<Peca | null> {
-  if (semSupabase()) return pecasMock.find((p) => p.slug === slug) ?? null;
-  const { data, error } = await supabasePublic()
-    .from("pecas")
-    .select(SELECT)
-    .eq("slug", slug)
-    .maybeSingle();
-  if (error) throw new Error(`Supabase (peca ${slug}): ${error.message}`);
-  return data ? ordenaImagens(data as Peca) : null;
+export function getPecaPorSlug(slug: string): Promise<Peca | null> {
+  return ouMock(
+    `peca ${slug}`,
+    async () => {
+      const { data, error } = await supabasePublic()
+        .from("pecas")
+        .select(SELECT)
+        .eq("slug", slug)
+        .maybeSingle();
+      if (error) throw new Error(error.message);
+      return data ? ordenaImagens(data as Peca) : null;
+    },
+    () => pecasMock.find((p) => p.slug === slug) ?? null,
+  );
 }
 
 // "Outras peças" da página da peça: mesma categoria, aleatórias,
 // priorizando disponíveis. Sorteio acontece a cada revalidação (60 s).
 export async function getOutras(peca: Peca, quantas = 3): Promise<Peca[]> {
-  let todas: Peca[];
-  if (semSupabase()) {
-    todas = pecasMock.filter(
-      (p) => p.categoria === peca.categoria && p.id !== peca.id,
-    );
-  } else {
-    const { data, error } = await supabasePublic()
-      .from("pecas")
-      .select(SELECT)
-      .eq("categoria", peca.categoria)
-      .neq("id", peca.id);
-    if (error) throw new Error(`Supabase (outras): ${error.message}`);
-    todas = (data as Peca[]).map(ordenaImagens);
-  }
+  const todas = await ouMock(
+    "outras",
+    async () => {
+      const { data, error } = await supabasePublic()
+        .from("pecas")
+        .select(SELECT)
+        .eq("categoria", peca.categoria)
+        .neq("id", peca.id);
+      if (error) throw new Error(error.message);
+      return (data as Peca[]).map(ordenaImagens);
+    },
+    () =>
+      pecasMock.filter(
+        (p) => p.categoria === peca.categoria && p.id !== peca.id,
+      ),
+  );
   const embaralha = <T,>(lista: T[]) => lista.sort(() => Math.random() - 0.5);
   const vivas = embaralha(todas.filter((p) => p.status !== "vendida"));
   const vendidas = embaralha(todas.filter((p) => p.status === "vendida"));
