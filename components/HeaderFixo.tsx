@@ -17,10 +17,10 @@ export default function HeaderFixo({ children }: { children: ReactNode }) {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-[background-color,border-color] duration-200 ${
+      className={`sticky top-0 z-50 transition-[background-color] duration-200 ${
         rolou
-          ? "border-b border-ambar/[0.14] bg-preto/[0.92] backdrop-blur-[12px]"
-          : "border-b border-transparent bg-gradient-to-b from-preto/80 via-preto/40 to-transparent"
+          ? "bg-preto/[0.92] backdrop-blur-[12px]"
+          : "bg-gradient-to-b from-preto/80 via-preto/40 to-transparent"
       }`}
     >
       <div

@@ -11,49 +11,17 @@ import { getDestaques } from "@/lib/pecas.server";
 import { site } from "@/data/site.config";
 
 // Imports estáticos das fotos de ambiente: blur automático + zero CLS.
-import fotoSala from "@/public/images/ambiente/sala.jpg";
+import fotoSala from "@/public/images/ambiente/hero-sala.webp";
 import fotoBandeja from "@/public/images/ambiente/bandeja.jpg";
 import fotoPatos from "@/public/images/ambiente/patos.jpg";
 import fotoEstudio from "@/public/images/ambiente/estudio.jpg";
 import fotoQuarto from "@/public/images/ambiente/quarto.jpg";
 import fotoCorredor from "@/public/images/ambiente/corredor.jpg";
 import fotoHero from "@/public/images/ambiente/hero.jpg";
-import tintaCor from "@/public/images/deco/tinta-cor.png";
 
 // ISR: as peças vêm do Supabase e a página se reconstrói a cada 60 s
 // (ou na hora, via revalidatePath, quando o admin salvar algo).
 export const revalidate = 60;
-
-// Seta de scroll rabiscada à mão — mesmo traço do sublinhado do H1, em rosa.
-function SetaRabiscada({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 40 60"
-      fill="none"
-      className={`-rotate-6 ${className ?? ""}`}
-    >
-      <path
-        d="M21 4 C 15 18, 26 30, 19 48"
-        stroke="currentColor"
-        strokeWidth="5.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M9 40 C 12 45, 16 49, 19 52"
-        stroke="currentColor"
-        strokeWidth="5.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M31 38 C 27 43, 23 48, 19 52"
-        stroke="currentColor"
-        strokeWidth="5.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 export default async function Home() {
   // A home mostra só os destaques (máx. 8) — o acervo completo vive em /pecas.
@@ -101,139 +69,73 @@ export default async function Home() {
           </nav>
       </HeaderFixo>
 
-      {/* ── 01. Hero — NADA AQUI SE REPETE. ─────────────────────── */}
+      {/* ── 01. Hero: a sala inteira, uma frase e um botão, no centro ── */}
       {/* mobile: 100svh (sem pulo da barra do Safari) menos o header em fluxo */}
       <section
         id="hero"
-        className="relative flex min-h-[calc(100svh-4.75rem)] flex-col lg:min-h-[88vh]"
+        className="relative flex min-h-[calc(100svh-4.75rem)] flex-col items-center justify-center lg:min-h-[92vh]"
       >
-        {/* foto: fundo inteiro no mobile; metade direita no desktop.
-            -top: sobe atrás do header transparente até o topo da página */}
-        <div className="absolute inset-x-0 -top-[4.75rem] bottom-0 z-0 lg:left-auto lg:right-0 lg:w-[56%]">
+        {/* foto de ponta a ponta. -top: sobe atrás do header transparente.
+            hero-sala.webp: o post da sala já sem a faixa dos watermarks, limpo do
+            ruído do Instagram e ampliado para 2160 px (a original tem só 1080) */}
+        <div className="absolute inset-x-0 -top-[4.75rem] bottom-0 z-0">
           <Image
             src={fotoSala}
             alt="Sala escura da vérít.lab com quadros e espelhos grafitados iluminados"
             fill
             preload
+            quality={90}
             placeholder="blur"
-            sizes="(min-width: 1024px) 54vw, 100vw"
-            className="object-cover object-[62%_center] lg:object-center lg:[mask-image:linear-gradient(to_right,transparent_0%,rgba(0,0,0,0.35)_28%,rgba(0,0,0,0.75)_45%,black_62%)]"
+            sizes="100vw"
+            className="object-cover object-[50%_55%]"
           />
-          {/* scrim mobile: texto na faixa escura de cima, foto respira no meio */}
+          {/* escurece por igual e mais no miolo: a frase lê sobre os quadros acesos */}
           <div
             aria-hidden
-            className="absolute inset-0 lg:hidden"
+            className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, rgba(10,8,6,0.94) 0%, rgba(10,8,6,0.88) 42%, rgba(10,8,6,0.55) 68%, rgba(10,8,6,0.90) 100%)",
+                "radial-gradient(ellipse 70% 55% at 50% 52%, rgba(16,13,10,0.72) 0%, rgba(16,13,10,0.45) 60%, rgba(16,13,10,0.35) 100%)",
             }}
           />
-          {/* escurece o topo da foto (o watermark gravado nela some atrás do header) */}
+          {/* topo e pé: o header lê no alto, e a foto se funde no preto da faixa */}
           <div
             aria-hidden
-            className="absolute inset-x-0 top-0 hidden h-40 lg:block"
+            className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, #100d0a 0%, rgba(16,13,10,0.72) 50%, transparent 100%)",
+                "linear-gradient(to bottom, #100d0a 0%, rgba(16,13,10,0.6) 14%, transparent 32%, transparent 72%, #100d0a 100%)",
             }}
           />
         </div>
 
-        {/* tinta escorrendo do topo — decorativa, só no desktop: carrega lazy.
-            -top: nasce atrás do header transparente, sem corte seco */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-0 -top-[4.75rem] z-0 hidden w-[44%] opacity-50 lg:block"
-        >
-          <Image
-            src={tintaCor}
-            alt=""
-            loading="lazy"
-            sizes="(min-width: 1024px) 44vw, 1px"
-            className="h-auto w-full [mask-image:radial-gradient(130%_130%_at_0%_0%,black_55%,transparent_80%)]"
-          />
-        </div>
-
-        <div className="relative z-10 flex w-full flex-1 flex-col px-5 pt-[5.5rem] sm:px-12 lg:justify-center lg:px-20 lg:pt-0">
-          <div className="lg:max-w-[46%] lg:pl-[3vw]">
-            {/* kicker: o que a vérít vende, em 1 segundo — 1 linha em 360px */}
-            <p className="mb-5 flex flex-wrap items-center gap-x-1.5 text-[10px] font-medium uppercase tracking-[0.14em] text-ambar sm:gap-x-2 sm:text-[0.7rem] sm:tracking-[0.18em]">
-              <span>Espelhos</span>
-              <span aria-hidden className="text-rosa">·</span>
-              <span>Quadros</span>
-              <span aria-hidden className="text-rosa">·</span>
-              <span>Objetos</span>
-              <span aria-hidden className="hidden text-rosa sm:inline">·</span>
-              {/* o "feito à mão" escrito à mão */}
-              <span className="font-marker hidden -rotate-2 text-base normal-case tracking-normal text-rosa sm:inline">
-                Feitos à mão
-              </span>
-            </p>
-            {/* H1 em 2 linhas fixas — quebra manual, nunca 4 linhas */}
-            <h1 className="font-extrabold uppercase leading-[0.92] tracking-tight">
-              {/* nowrap + escala por vw: "NADA AQUI" nunca quebra em 2 linhas */}
-              <span className="block whitespace-nowrap text-[clamp(2.7rem,12vw,4.8rem)] lg:text-[clamp(3rem,5.6vw,5.5rem)]">
-                Nada aqui
-              </span>
-              {/* inline-block: o sublinhado acompanha a largura de "se repete." */}
-              <span className="inline-block -rotate-1 pt-2">
-                <span className="font-marker block whitespace-nowrap text-[clamp(2.5rem,11vw,4.4rem)] font-normal tracking-normal text-ambar lg:text-[clamp(2.9rem,5.2vw,5.2rem)]">
-                  Se repete.
-                </span>
-                <svg
-                  aria-hidden
-                  className="mt-1 block h-3 w-full text-ambar lg:h-4"
-                  viewBox="0 0 300 14"
-                  fill="none"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M4 9 C 60 3, 150 12, 296 5"
-                    stroke="currentColor"
-                    strokeWidth="8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-            </h1>
-            <p className="mt-8 max-w-lg text-base leading-normal text-osso/90 lg:text-xl">
-              Peças únicas, feitas à mão, para espaços que também têm
-              personalidade.
-            </p>
-            {/* CTAs compactos no mobile; etiquetas meio tortas que endireitam no hover */}
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-              <Cta
-                cta="hero-ver-pecas"
-                href="/pecas"
-                className="btn-ambar w-full -rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:brightness-110 sm:w-auto sm:py-4!"
-              >
-                Ver peças <span aria-hidden>→</span>
-              </Cta>
-              <Cta
-                cta="hero-encomendar"
-                href="#encomenda"
-                className="btn-outline w-full rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto! sm:w-auto sm:py-4!"
-              >
-                Encomendar uma peça <span aria-hidden>→</span>
-              </Cta>
-            </div>
-            {/* seta desktop */}
-            <a
-              href="#pecas"
-              aria-label="Descer para a galeria"
-              className="mt-14 hidden text-rosa transition-opacity [animation:flutuar_2.6s_ease-in-out_infinite] hover:opacity-75 motion-reduce:animate-none lg:inline-block"
+        <div className="relative z-10 flex w-full flex-col items-center px-5 text-center sm:px-12">
+          <h1 className="inline-block -rotate-1">
+            <span className="font-marker block text-[clamp(2.4rem,10vw,5.2rem)] leading-none text-ambar">
+              Nada aqui se repete.
+            </span>
+            <svg
+              aria-hidden
+              className="mt-2 block h-3 w-full text-ambar lg:h-4"
+              viewBox="0 0 300 14"
+              fill="none"
+              preserveAspectRatio="none"
             >
-              <SetaRabiscada className="h-14 w-auto" />
-            </a>
-          </div>
-          {/* seta mobile: ancorada no rodapé do hero */}
-          <a
-            href="#pecas"
-            aria-label="Descer para a galeria"
-            className="mb-6 mt-auto inline-block self-start text-rosa [animation:flutuar_2.6s_ease-in-out_infinite] motion-reduce:animate-none lg:hidden"
+              <path
+                d="M4 9 C 60 3, 150 12, 296 5"
+                stroke="currentColor"
+                strokeWidth="8"
+                strokeLinecap="round"
+              />
+            </svg>
+          </h1>
+          <Cta
+            cta="hero-ver-pecas"
+            href="/pecas"
+            className="btn-ambar mt-9 w-full max-w-xs -rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:brightness-110 sm:w-auto sm:py-4!"
           >
-            <SetaRabiscada className="h-10 w-auto" />
-          </a>
+            Ver peças <span aria-hidden>→</span>
+          </Cta>
         </div>
       </section>
 
