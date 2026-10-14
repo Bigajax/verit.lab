@@ -27,7 +27,7 @@ const PROVISORIO = {
 // o NOME muda a cada leva de arte: o otimizador de imagem do Next (e o da
 // Vercel) guarda a versão pelo endereço, e o mesmo nome com arte nova
 // continuava mostrando a antiga (14/10/2026). Trocar aqui e em data/banners.ts.
-const sufixo = "-a1";
+const sufixo = "-a2";
 
 const W = 2400;
 const H = 1029;

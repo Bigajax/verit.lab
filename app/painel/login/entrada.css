@@ -1,0 +1,132 @@
+/* ═════════════════════════════════════════════════════════════
+   A ENTRADA DO PAINEL DA VÉRÍT (14/10/2026, a loja entra no pacote).
+   A capa é a logo inteira, grande, no preto de galeria do site (regra do
+   Rafael para toda loja): o VERIT LAB em ciano, com um respiro magenta
+   atrás, as duas cores da logo. O botão no preto, com a sombra magenta. Só desta loja.
+   ═════════════════════════════════════════════════════════════ */
+.vl-entrada {
+  --vl-preto: #100d0a;
+  --vl-ciano: #45c2ff;
+  --vl-magenta: #c000c7;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+  background: var(--pn-papel);
+}
+@media (min-width: 900px) {
+  .vl-entrada {
+    grid-template-columns: minmax(0, 1.1fr) minmax(24rem, 1fr);
+    grid-template-rows: none;
+  }
+}
+
+/* ── a capa: a logo ── */
+.vl-entrada__capa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1.25rem 1.75rem;
+  /* o preto da galeria, com só um respiro magenta atrás da logo */
+  background: radial-gradient(circle at 50% 45%, rgba(192, 0, 199, 0.14) 0%, var(--vl-preto) 42%);
+}
+.vl-entrada__logo {
+  width: min(15rem, 62vw);
+  height: auto;
+}
+.vl-entrada__frase {
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  text-align: center;
+  color: rgba(237, 228, 215, 0.8);
+}
+@media (min-width: 900px) {
+  .vl-entrada__capa {
+    gap: 1.75rem;
+    min-height: 100dvh;
+    padding: 3rem;
+  }
+  .vl-entrada__logo {
+    width: min(30rem, 70%);
+  }
+  .vl-entrada__frase {
+    font-size: 1.0625rem;
+  }
+}
+
+/* ── o lado do formulário ── */
+.vl-entrada__lado {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+  border-top: 4px solid var(--vl-magenta);
+}
+@media (min-width: 900px) {
+  .vl-entrada__lado {
+    padding: 3rem clamp(2rem, 5vw, 4.5rem);
+    border-top: 0;
+    border-left: 4px solid var(--vl-magenta);
+  }
+}
+.vl-entrada__caixa {
+  width: 100%;
+  max-width: 24rem;
+  margin: 0 auto;
+}
+.vl-entrada__rotulo {
+  font-family: var(--pn-mono), monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pn-tinta);
+}
+.vl-entrada__titulo {
+  margin: 0.375rem 0 1.5rem;
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 800;
+  font-size: 2.5rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--pn-tinta);
+}
+/* o botão do painel no preto da galeria, com a sombra magenta */
+.vl-entrada .pn-carimbo button {
+  min-height: 3rem;
+  background: var(--vl-preto);
+  color: #ffffff;
+  border-color: var(--vl-preto);
+  box-shadow: 4px 4px 0 var(--vl-magenta);
+}
+@media (hover: hover) and (pointer: fine) {
+  .vl-entrada .pn-carimbo button:hover:not(:disabled) {
+    background: #2a2420;
+  }
+}
+.vl-entrada .campo:focus {
+  border-color: var(--pn-tinta);
+  box-shadow: inset 0 -2px 0 var(--vl-magenta);
+}
+.vl-entrada__ajuda {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--pn-nevoa);
+}
+.vl-entrada__ajuda a {
+  font-weight: 700;
+  color: var(--pn-tinta);
+  text-decoration: underline;
+  text-decoration-color: var(--vl-magenta);
+  text-underline-offset: 0.2em;
+}
+.vl-entrada__assina {
+  margin-top: 2rem;
+  text-align: center;
+  font-family: var(--pn-mono), monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pn-nevoa);
+}
