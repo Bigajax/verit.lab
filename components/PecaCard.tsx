@@ -27,7 +27,7 @@ export default function PecaCard({
     <Link
       href={`/pecas/${peca.slug}`}
       data-cta={`card-${peca.slug}`}
-      className="group relative block overflow-hidden border border-ouro/25 bg-osso/[0.03] transition-colors duration-300 hover:border-ambar/70"
+      className="group relative block overflow-hidden border border-cinza/25 bg-osso/[0.03] transition-colors duration-300 hover:border-ciano/70"
     >
       <div className="relative aspect-[4/5]">
         {foto && (
@@ -57,34 +57,34 @@ export default function PecaCard({
           <div aria-hidden className="absolute inset-0 bg-preto/45" />
         )}
 
-        {/* carimbo manuscrito atravessado: rosa = vendida, ouro = reservada */}
+        {/* carimbo manuscrito atravessado: magenta = vendida, cinza = reservada */}
         {(vendida || reservada) && (
           <p
             aria-hidden
             className={`font-marker absolute inset-0 flex -rotate-12 items-center justify-center text-3xl lg:text-4xl ${
-              vendida ? "text-rosa" : "text-ouro"
+              vendida ? "text-magenta" : "text-cinza"
             }`}
           >
             {vendida ? "vendida" : "reservada"}
           </p>
         )}
 
-        {/* selo de oferta: percentual rabiscado em rosa, meio torto */}
+        {/* selo de oferta: percentual rabiscado em magenta, meio torto */}
         {temDesconto(peca) && (
           <p
             aria-hidden
-            className="font-marker absolute left-2.5 top-2.5 -rotate-6 bg-preto/55 px-2 py-0.5 text-xl text-rosa lg:text-2xl"
+            className="font-marker absolute left-2.5 top-2.5 -rotate-6 bg-preto/55 px-2 py-0.5 text-xl text-magenta lg:text-2xl"
           >
             -{percentualDesconto(peca)}%
           </p>
         )}
 
         {/* badge do acervo */}
-        <div className="absolute right-2.5 top-2.5 border border-ouro/40 bg-preto/55 px-1.5 py-1 text-center">
-          <p className="text-sm leading-none text-ambar">{peca.numero}</p>
+        <div className="absolute right-2.5 top-2.5 border border-cinza/40 bg-preto/55 px-1.5 py-1 text-center">
+          <p className="text-sm leading-none text-ciano">{peca.numero}</p>
           <p
             className={`mt-0.5 text-[8px] uppercase tracking-[0.14em] ${
-              vendida ? "text-rosa" : reservada ? "text-ouro" : "text-ambar"
+              vendida ? "text-magenta" : reservada ? "text-cinza" : "text-ciano"
             }`}
           >
             {vendida ? "vendida" : reservada ? "reservada" : "única"}
@@ -98,12 +98,13 @@ export default function PecaCard({
               {peca.nome}
             </h3>
             <p className="mt-1 text-[10px] text-osso/65">
-              {rotuloTipo(peca)} · {peca.dimensoes}
+              {rotuloTipo(peca)}
+              {peca.dimensoes ? ` · ${peca.dimensoes}` : null}
             </p>
             {vendida || reservada ? (
               <p
                 className={`mt-1 text-[15px] font-semibold leading-none ${
-                  vendida ? "text-rosa" : "text-ouro"
+                  vendida ? "text-magenta" : "text-cinza"
                 }`}
               >
                 {vendida ? "vendida" : "reservada"}
@@ -113,12 +114,12 @@ export default function PecaCard({
                 <span className="text-[11px] text-osso/50 line-through">
                   {formataReais(peca.preco_original!)}
                 </span>
-                <span className="text-[15px] font-semibold text-ambar">
+                <span className="text-[15px] font-semibold text-ciano">
                   {formataReais(peca.preco!)}
                 </span>
               </p>
             ) : (
-              <p className="mt-1 text-[15px] font-semibold leading-none text-ambar">
+              <p className="mt-1 text-[15px] font-semibold leading-none text-ciano">
                 {peca.preco != null ? formataReais(peca.preco) : "sob consulta"}
               </p>
             )}
@@ -127,8 +128,8 @@ export default function PecaCard({
             aria-hidden
             className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-colors lg:h-11 lg:w-11 ${
               vendida
-                ? "border border-ambar text-ambar"
-                : "bg-ambar text-preto"
+                ? "border border-ciano text-ciano"
+                : "bg-ciano text-preto"
             }`}
           >
             →

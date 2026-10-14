@@ -1,15 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Instrument_Serif, Protest_Revolution } from "next/font/google";
+import { Archivo, Protest_Revolution } from "next/font/google";
 import "./globals.css";
+import ModalEncomenda from "@/components/ModalEncomenda";
 import { site } from "@/data/site.config";
-
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const archivo = Archivo({
   variable: "--font-archivo",
@@ -43,10 +36,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
-      className={`${instrument.variable} ${archivo.variable} ${permanent.variable} antialiased`}
+      className={`${archivo.variable} ${permanent.variable} antialiased`}
     >
       <body>
         {children}
+        <ModalEncomenda />
         <div aria-hidden className="grain pointer-events-none fixed inset-0 z-50" />
       </body>
     </html>

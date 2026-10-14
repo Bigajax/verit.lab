@@ -49,7 +49,7 @@ export default function OrdenarDestaques({ pecas: iniciais }: { pecas: Peca[] })
       {pecas.length === 0 ? (
         <p className="mt-10 text-osso/55">
           Nenhuma peça marcada como destaque.{" "}
-          <Link href="/admin" className="text-ambar underline">
+          <Link href="/admin" className="text-ciano underline">
             Marque na edição da peça
           </Link>
           .
@@ -68,10 +68,10 @@ export default function OrdenarDestaques({ pecas: iniciais }: { pecas: Peca[] })
                   if (arrastando !== null) mover(arrastando, i);
                   setArrastando(null);
                 }}
-                className="flex cursor-grab items-center gap-4 border border-ouro/25 bg-osso/[0.03] p-3"
+                className="flex cursor-grab items-center gap-4 border border-cinza/25 bg-osso/[0.03] p-3"
               >
-                <span className="w-6 text-center text-lg text-ambar">{i + 1}</span>
-                <div className="relative h-16 w-12 shrink-0 overflow-hidden border border-ouro/25">
+                <span className="w-6 text-center text-lg text-ciano">{i + 1}</span>
+                <div className="relative h-16 w-12 shrink-0 overflow-hidden border border-cinza/25">
                   {foto && (
                     <Image src={foto.url} alt="" fill sizes="48px" className="object-cover" />
                   )}
@@ -83,7 +83,7 @@ export default function OrdenarDestaques({ pecas: iniciais }: { pecas: Peca[] })
                   <button
                     type="button"
                     aria-label="Subir"
-                    className="flex h-11 w-11 items-center justify-center border border-osso/25 text-osso/70 hover:border-ambar hover:text-ambar disabled:opacity-30"
+                    className="flex h-11 w-11 items-center justify-center border border-osso/25 text-osso/70 hover:border-ciano hover:text-ciano disabled:opacity-30"
                     disabled={i === 0}
                     onClick={() => mover(i, i - 1)}
                   >
@@ -92,7 +92,7 @@ export default function OrdenarDestaques({ pecas: iniciais }: { pecas: Peca[] })
                   <button
                     type="button"
                     aria-label="Descer"
-                    className="flex h-11 w-11 items-center justify-center border border-osso/25 text-osso/70 hover:border-ambar hover:text-ambar disabled:opacity-30"
+                    className="flex h-11 w-11 items-center justify-center border border-osso/25 text-osso/70 hover:border-ciano hover:text-ciano disabled:opacity-30"
                     disabled={i === pecas.length - 1}
                     onClick={() => mover(i, i + 1)}
                   >
@@ -106,18 +106,18 @@ export default function OrdenarDestaques({ pecas: iniciais }: { pecas: Peca[] })
       )}
 
       {pecas.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-ouro/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur lg:static lg:mt-8 lg:border-0 lg:bg-transparent lg:p-0">
+        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-cinza/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur lg:static lg:mt-8 lg:border-0 lg:bg-transparent lg:p-0">
           <div className="mx-auto flex max-w-2xl items-center gap-4">
             <button
               type="button"
-              className="btn-ambar flex-1 lg:flex-none"
+              className="btn-ciano flex-1 lg:flex-none"
               disabled={salvando}
               onClick={salvar}
             >
               {salvando ? "Salvando…" : "Salvar ordem"}
             </button>
             {erro && (
-              <p role="alert" className="text-sm font-semibold text-rosa">
+              <p role="alert" className="text-sm font-semibold text-magenta">
                 {erro}
               </p>
             )}

@@ -41,7 +41,7 @@ export async function generateMetadata({
   const description =
     peca.frase ??
     peca.descricao?.slice(0, 150) ??
-    `${rotuloTipo(peca)} único, feito à mão. ${peca.dimensoes}. Nada aqui se repete.`;
+    `${rotuloTipo(peca)} único, feito à mão.${peca.dimensoes ? ` ${peca.dimensoes}.` : ""} Nada aqui se repete.`;
   return {
     title: `${peca.nome} · vérit.lab`,
     description,
@@ -57,7 +57,8 @@ export async function generateMetadata({
 function FichaTecnica({ peca }: { peca: Peca }) {
   const linhas: [string, string][] = [
     ["Tipo", rotuloTipo(peca)],
-    ["Dimensões", peca.dimensoes],
+    // peça sem medida publicada fica sem a linha (nunca chutar)
+    ...(peca.dimensoes ? ([["Dimensões", peca.dimensoes]] as [string, string][]) : []),
     ...(peca.material ? ([["Material", peca.material]] as [string, string][]) : []),
     ...(peca.acabamento
       ? ([["Acabamento", peca.acabamento]] as [string, string][])
@@ -72,7 +73,7 @@ function FichaTecnica({ peca }: { peca: Peca }) {
       {linhas.map(([rotulo, valor]) => (
         <div
           key={rotulo}
-          className="flex items-baseline justify-between gap-6 border-b border-ouro/15 py-3"
+          className="flex items-baseline justify-between gap-6 border-b border-cinza/15 py-3"
         >
           <dt className="shrink-0 text-[0.65rem] uppercase tracking-[0.24em] text-osso/50">
             {rotulo}
@@ -101,7 +102,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
         {/* migalha discreta de volta ao catálogo */}
         <Link
           href="/pecas"
-          className="eyebrow group relative inline-flex min-h-11 items-center hover:text-ambar"
+          className="eyebrow group relative inline-flex min-h-11 items-center hover:text-ciano"
         >
           ← Todas as peças
           <RabiscoHover />
@@ -112,15 +113,15 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
           <GaleriaPeca imagens={peca.imagens} nome={peca.nome} />
 
           {/* coluna direita — informações (sticky no desktop) */}
-          <div className="mt-10 lg:mt-0 lg:sticky lg:top-10 lg:self-start">
+          <div className="mt-10 lg:mt-0 lg:sticky lg:top-[calc(var(--altura-topo)+1.5rem)] lg:self-start">
             {/* badge do acervo + status */}
-            <p className="inline-flex items-center gap-3 border border-ouro/40 px-3 py-2">
-              <span className="text-lg leading-none text-ambar">
+            <p className="inline-flex items-center gap-3 border border-cinza/40 px-3 py-2">
+              <span className="text-lg leading-none text-ciano">
                 {peca.numero}
               </span>
               <span
                 className={`text-[0.6rem] uppercase tracking-[0.18em] ${
-                  vendida ? "text-rosa" : reservada ? "text-ouro" : "text-osso/55"
+                  vendida ? "text-magenta" : reservada ? "text-cinza" : "text-osso/55"
                 }`}
               >
                 {vendida ? "vendida" : reservada ? "reservada" : "única"}
@@ -136,7 +137,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
                   viewBox="0 0 300 14"
                   fill="none"
                   preserveAspectRatio="none"
-                  className="mt-2 block h-2.5 w-full text-ambar"
+                  className="mt-2 block h-2.5 w-full text-ciano"
                 >
                   <path
                     d="M4 9 C 60 3, 150 12, 296 5"
@@ -149,41 +150,41 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
             </h1>
 
             {peca.frase && (
-              <p className="font-marker mt-4 -rotate-1 text-2xl text-ambar">
+              <p className="font-marker mt-4 -rotate-1 text-2xl text-ciano">
                 “{peca.frase}”
               </p>
             )}
 
             {vendida ? (
-              <p className="font-marker mt-6 -rotate-1 text-4xl text-rosa">
+              <p className="font-marker mt-6 -rotate-1 text-4xl text-magenta">
                 vendida
               </p>
             ) : reservada ? (
-              /* mesmo tratamento da vendida, em ouro — reserva ainda pode cair */
-              <p className="font-marker mt-6 -rotate-1 text-4xl text-ouro">
+              /* mesmo tratamento da vendida, em cinza: a reserva ainda pode cair */
+              <p className="font-marker mt-6 -rotate-1 text-4xl text-cinza">
                 reservada
               </p>
             ) : temDesconto(peca) ? (
-              /* de/por: original riscado + preço grande + rabisco rosa */
+              /* de/por: original riscado + preço grande + rabisco magenta */
               <p className="mt-6 flex flex-wrap items-baseline gap-x-3">
                 <span className="text-xl text-osso/45 line-through">
                   {formataReais(peca.preco_original!)}
                 </span>
-                <span className="text-4xl font-extrabold text-ambar">
+                <span className="text-4xl font-extrabold text-ciano">
                   {formataReais(peca.preco!)}
                 </span>
-                <span className="font-marker -rotate-2 text-2xl text-rosa">
+                <span className="font-marker -rotate-2 text-2xl text-magenta">
                   -{percentualDesconto(peca)}%
                 </span>
               </p>
             ) : (
-              <p className="mt-6 text-4xl font-extrabold text-ambar">
+              <p className="mt-6 text-4xl font-extrabold text-ciano">
                 {peca.preco != null ? formataReais(peca.preco) : "sob consulta"}
               </p>
             )}
 
             {peca.descricao ? (
-              <p className="font-display mt-6 max-w-md text-xl leading-snug text-osso/85">
+              <p className="mt-6 max-w-md text-xl font-semibold tracking-tight leading-snug text-osso/85">
                 {peca.descricao}
               </p>
             ) : (
@@ -200,7 +201,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
               cta={vendida ? `peca-vendida-${peca.slug}` : `peca-quero-${peca.slug}`}
               href={vendida ? waPecaVendida(peca) : waPecaPagina(peca)}
               novaAba
-              className="btn-ambar mt-9 w-full -rotate-1 transition-all! duration-200 hover:rotate-0 hover:brightness-110"
+              className="btn-ciano mt-9 w-full -rotate-1 transition-all! duration-200 hover:rotate-0 hover:brightness-110"
             >
               {vendida ? (
                 <>
@@ -228,7 +229,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
             <svg
               aria-hidden
               viewBox="0 0 120 120"
-              className="mt-10 hidden w-28 animate-[girar_20s_linear_infinite] text-rosa/70 motion-reduce:animate-none lg:block"
+              className="mt-10 hidden w-28 animate-[girar_20s_linear_infinite] text-magenta/70 motion-reduce:animate-none lg:block"
             >
               <defs>
                 <path
@@ -256,7 +257,7 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
         <section className="px-5 pb-24 pt-24 sm:px-12 lg:px-20 lg:pt-32">
           <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
             <span className="block text-4xl sm:text-5xl">Outras</span>
-            <span className="font-marker block -rotate-1 pt-2 text-3xl font-normal normal-case tracking-normal text-ambar sm:text-4xl">
+            <span className="font-marker block -rotate-1 pt-2 text-3xl font-normal normal-case tracking-normal text-ciano sm:text-4xl">
               peças.
             </span>
           </h2>

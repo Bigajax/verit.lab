@@ -1,14 +1,16 @@
+import Image from "next/image";
 import { site } from "@/data/site.config";
+import logo from "@/public/marca/logo.png";
 import { waGeral } from "@/lib/whatsapp";
 
 // Footer compartilhado — idêntico ao da home.
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-ouro/25">
+    <footer className="border-t border-cinza/25">
       <div className="flex flex-wrap items-end justify-between gap-8 px-5 pt-14 pb-[calc(3.5rem+env(safe-area-inset-bottom))] sm:px-12 lg:px-20 lg:pb-14">
         <div>
-          <p className="font-display text-4xl italic">vérít.lab</p>
-          <p className="font-marker mt-2 -rotate-1 text-xl text-rosa">
+          <Image src={logo} alt="vérít.lab" className="h-14 w-auto" />
+          <p className="font-marker mt-2 -rotate-1 text-xl text-magenta">
             nothing repeat.
           </p>
           <p className="eyebrow mt-3 text-osso/55">{site.cidade} · PR</p>
@@ -19,7 +21,7 @@ export default function SiteFooter() {
             href={site.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
+            className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ciano"
           >
             {site.instagramHandle}
           </a>
@@ -27,7 +29,7 @@ export default function SiteFooter() {
             href={waGeral()}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ambar"
+            className="inline-flex min-h-11 items-center text-sm text-osso/70 hover:text-ciano"
           >
             WhatsApp
           </a>

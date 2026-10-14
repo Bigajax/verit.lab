@@ -1,0 +1,582 @@
+/* ══ O TOPO NO DESENHO DO MOLDE (14/10/2026) ═══════════════════════
+   O cabeçalho fino e travado, a campanha de 3 banners e os benefícios,
+   portados do _molde do estúdio (Campanha, Cabecalho, Beneficios) na roupa
+   da vérít: preto de galeria, osso, e o ciano e o magenta da logo. Este CSS não
+   está em camada: vence as classes do Tailwind de propósito. */
+:root {
+  --altura-topo: 5.5rem; /* faixa 2rem + linha 3.5rem */
+  --linha: color-mix(in srgb, var(--osso) 12%, transparent);
+  --sangria: 1.25rem;
+}
+@media (min-width: 1024px) {
+  :root {
+    --altura-topo: 6rem; /* faixa 2rem + linha 4rem */
+  }
+}
+section[id] {
+  scroll-margin-top: calc(var(--altura-topo) + 1rem);
+}
+
+/* ── o cabeçalho ── */
+.vt-topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--preto);
+  border-bottom: 1px solid var(--linha);
+}
+/* a faixa no magenta da logo nova (o fundo da foto do perfil), letra branca:
+   o ciano da logo sobre o magenta não tem contraste para letra pequena */
+.vt-aviso {
+  height: 2rem;
+  overflow: hidden;
+  background: #c000c7;
+  color: #ffffff;
+}
+.vt-aviso__trilho {
+  position: relative;
+  height: 100%;
+}
+.vt-aviso__frase {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding-inline: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+.vt-aviso__frase[data-agora="true"] {
+  opacity: 1;
+  transform: none;
+}
+.vt-aviso__frase[data-foi="true"] {
+  transform: translateY(-100%);
+}
+.vt-topo__linha {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  height: 3.5rem;
+  padding-inline: 0.75rem;
+}
+.vt-topo__marca {
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+.vt-topo__logo {
+  width: auto;
+  height: 2rem;
+}
+.vt-gaveta__logo {
+  width: auto;
+  height: 1.75rem;
+}
+.vt-topo__icone {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--osso);
+}
+.vt-topo__menu {
+  display: none;
+}
+.vt-topo__whats {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  color: var(--osso);
+  transition: color 200ms ease;
+}
+.vt-topo__whats:hover {
+  color: var(--ciano);
+}
+.vt-topo__whats-texto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+@media (min-width: 1024px) {
+  .vt-topo__linha {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 2.5rem;
+    height: 4rem;
+    padding-inline: 5rem;
+  }
+  .vt-topo__abrir {
+    display: none;
+  }
+  .vt-topo__marca {
+    justify-self: start;
+  }
+  .vt-topo__logo {
+    height: 2.375rem;
+  }
+  .vt-topo__menu {
+    display: flex;
+    justify-content: center;
+    gap: 2.25rem;
+  }
+  .vt-topo__menu a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--osso) 85%, transparent);
+    transition: color 200ms ease;
+  }
+  .vt-topo__menu a:hover {
+    color: var(--ciano);
+  }
+  .vt-topo__whats {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .vt-topo__whats-texto {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+}
+
+/* a gaveta do celular */
+.vt-gaveta {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  visibility: hidden;
+  transition: visibility 0s linear 300ms;
+}
+.vt-gaveta[data-aberta="true"] {
+  visibility: visible;
+  transition: visibility 0s;
+}
+.vt-gaveta__fundo {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+.vt-gaveta[data-aberta="true"] .vt-gaveta__fundo {
+  opacity: 1;
+}
+.vt-gaveta__painel {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: flex;
+  flex-direction: column;
+  width: min(22rem, 86vw);
+  padding: 0.75rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+  background: var(--preto);
+  border-right: 1px solid var(--linha);
+  transform: translateX(-100%);
+  transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vt-gaveta[data-aberta="true"] .vt-gaveta__painel {
+  transform: none;
+}
+.vt-gaveta__cabeca {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.vt-gaveta__painel ul a {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  border-bottom: 1px solid var(--linha);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.vt-gaveta__whats {
+  margin-top: auto;
+}
+
+/* ── a campanha do topo ──
+   celular e tablet: a arte em pé (4:5), bolinhas no pé e o arrastar.
+   computador: a arte 21:9 de ponta a ponta, setas finas nas bordas. */
+.camp {
+  position: relative;
+  overflow: hidden;
+  background: var(--preto);
+  /* o arrastar para o lado é do carrossel, não do navegador */
+  touch-action: pan-y;
+  overscroll-behavior-x: contain;
+}
+.camp__palco {
+  display: grid;
+}
+.camp__slide {
+  position: relative;
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms ease-out, visibility 0s linear 600ms;
+}
+.camp__slide[data-ativo="true"] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 600ms ease-out, visibility 0s;
+}
+.camp__foto {
+  position: relative;
+  width: 100%;
+  /* mais alto que a arte (4:5): ela fica presa no topo e o escuro de baixo
+     cresce, para o título não cobrir a peça (o pé do espelho, o corpo do pato) */
+  aspect-ratio: 2 / 3;
+  /* sobra a faixa de benefícios na primeira tela */
+  max-height: calc(100svh - var(--altura-topo) - 4rem);
+  overflow: hidden;
+  background: #1a1511;
+}
+.camp__foto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(16, 13, 10, 0.92) 0%, rgba(16, 13, 10, 0.55) 30%, rgba(16, 13, 10, 0) 55%);
+}
+.camp__arte,
+.camp__arte-celular {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.camp__arte {
+  display: none;
+}
+/* a arte em pé encaixa pela largura, presa no topo; o preto da galeria
+   completa embaixo, e o degradê esconde a emenda */
+.camp__arte-celular {
+  background: var(--preto);
+}
+.camp__arte-celular img {
+  object-fit: contain;
+  object-position: 50% 0;
+  /* o pé da arte se dissolve no preto: sem isso, a emenda aparecia no botão */
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 83%);
+  mask-image: linear-gradient(to bottom, #000 70%, transparent 83%);
+}
+.camp__slide[data-ativo="true"] .camp__foto img {
+  animation: vt-assenta 7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes vt-assenta {
+  from {
+    transform: scale(1.03);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.camp__texto {
+  position: absolute;
+  z-index: 2;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0 var(--sangria) 2.75rem;
+  color: var(--osso);
+}
+.camp__titulo {
+  /* o título sólido do molde, no Archivo pesado da casa */
+  font-family: var(--font-archivo), sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 8.5vw, 3rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+  text-wrap: balance;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.4);
+}
+.camp__linha {
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--osso) 88%, transparent);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+/* o botão de contorno em caixa alta, como no molde */
+.camp__botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  margin-top: 0.25rem;
+  padding-inline: 1.75rem;
+  border: 1px solid var(--osso);
+  border-radius: 2px;
+  color: var(--osso);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+.camp__botao:hover {
+  background: var(--ciano);
+  border-color: var(--ciano);
+  color: var(--preto);
+}
+.camp__seta {
+  display: none;
+}
+/* o relógio: a barra que enche fica invisível, mas é ela que troca o
+   banner (onAnimationEnd); mouse em cima pausa */
+.camp__enche {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: camp-enche 6s linear forwards;
+}
+.camp__pontos[data-parado="true"] .camp__enche {
+  animation-play-state: paused;
+}
+@keyframes camp-enche {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.camp__pontos {
+  position: absolute;
+  left: 50%;
+  bottom: 0.75rem;
+  z-index: 3;
+  display: flex;
+  transform: translateX(-50%);
+}
+.camp__ponto {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.camp__ponto::before {
+  content: "";
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--osso) 45%, transparent);
+  transition: background-color 200ms ease, transform 200ms ease-out;
+}
+.camp__ponto[aria-current="true"]::before {
+  background: var(--magenta);
+  transform: scale(1.3);
+}
+
+/* computador */
+@media (min-width: 900px) {
+  .camp__foto {
+    aspect-ratio: 21 / 9;
+    max-height: calc(100svh - var(--altura-topo) - 5rem);
+    min-height: 20rem;
+  }
+  .camp__arte {
+    display: block;
+  }
+  .camp__arte-celular {
+    display: none;
+  }
+  .camp__foto::after {
+    background: linear-gradient(to top, rgba(16, 13, 10, 0.78) 0%, rgba(16, 13, 10, 0.3) 38%, rgba(16, 13, 10, 0) 62%);
+  }
+  .camp__slide[data-lado="esquerda"] .camp__foto::after {
+    background:
+      linear-gradient(to right, rgba(16, 13, 10, 0.7) 0%, rgba(16, 13, 10, 0) 55%),
+      linear-gradient(to top, rgba(16, 13, 10, 0.78) 0%, rgba(16, 13, 10, 0.3) 38%, rgba(16, 13, 10, 0) 62%);
+  }
+  .camp__slide[data-lado="direita"] .camp__foto::after {
+    background:
+      linear-gradient(to left, rgba(16, 13, 10, 0.7) 0%, rgba(16, 13, 10, 0) 55%),
+      linear-gradient(to top, rgba(16, 13, 10, 0.78) 0%, rgba(16, 13, 10, 0.3) 38%, rgba(16, 13, 10, 0) 62%);
+  }
+  .camp__texto {
+    inset: auto auto 0 0;
+    width: 50%;
+    gap: 1rem;
+    padding: 0 clamp(2.5rem, 5vw, 6rem) clamp(3rem, 7vh, 4.5rem);
+  }
+  .camp__slide[data-lado="esquerda"] .camp__texto {
+    padding-left: clamp(5rem, 7vw, 8rem);
+  }
+  .camp__slide[data-lado="direita"] .camp__texto {
+    left: 50%;
+    padding-right: clamp(5rem, 7vw, 8rem);
+  }
+  .camp__titulo {
+    font-size: clamp(2.75rem, 4.2vw, 4.75rem);
+  }
+  .camp__linha {
+    font-size: 1.0625rem;
+  }
+  .camp__botao {
+    min-height: 2.875rem;
+  }
+  /* as setas: finas, claras, sem fundo, nas duas bordas */
+  .camp__seta {
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 7rem;
+    margin-top: -3.5rem;
+    color: var(--osso);
+    opacity: 0.85;
+    filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.45));
+    transition: opacity 200ms ease, transform 200ms ease-out;
+  }
+  .camp__seta svg {
+    width: 1.5rem;
+    height: 3rem;
+  }
+  .camp__seta:hover {
+    opacity: 1;
+  }
+  .camp__seta:focus-visible {
+    outline: 2px solid var(--ciano);
+    outline-offset: -4px;
+  }
+  .camp__seta--antes {
+    left: 1rem;
+  }
+  .camp__seta--depois {
+    right: 1rem;
+  }
+  .camp__seta--antes:hover {
+    transform: translateX(-3px);
+  }
+  .camp__seta--depois:hover {
+    transform: translateX(3px);
+  }
+  /* as bolinhas saem da vista, mas ficam no leitor de tela e com o relógio */
+  .camp__pontos {
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .camp__ponto {
+    width: 1px;
+    height: 1px;
+  }
+}
+
+/* ── os benefícios, logo abaixo do topo ──
+   celular: UM por vez, com uma setinha de cada lado.
+   computador: os quatro lado a lado, separados por fio. */
+.vt-beneficios {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--linha);
+  background: var(--preto);
+}
+.vt-beneficios__lista {
+  flex: 1;
+  min-width: 0;
+}
+.vt-beneficios__item {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.75rem 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--osso);
+}
+.vt-beneficios__item[data-agora="true"] {
+  display: flex;
+  animation: vt-entra 260ms ease-out;
+}
+@keyframes vt-entra {
+  from {
+    opacity: 0;
+  }
+}
+.vt-beneficios__icone {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--ciano);
+}
+.vt-beneficios__seta {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 3.5rem;
+  color: var(--osso);
+}
+@media (min-width: 900px) {
+  .vt-beneficios__seta {
+    display: none;
+  }
+  .vt-beneficios__lista {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .vt-beneficios__item,
+  .vt-beneficios__item[data-agora="true"] {
+    display: flex;
+    min-height: 5rem;
+    padding: 1rem clamp(1rem, 2vw, 2rem);
+    font-size: 0.9375rem;
+    animation: none;
+  }
+  .vt-beneficios__item + .vt-beneficios__item {
+    border-left: 1px solid var(--linha);
+  }
+  .vt-beneficios__icone {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camp__slide,
+  .camp__slide[data-ativo="true"] {
+    transition: none;
+  }
+  .camp__slide[data-ativo="true"] .camp__foto img,
+  .camp__enche,
+  .vt-beneficios__item[data-agora="true"] {
+    animation: none;
+  }
+  .vt-aviso__frase,
+  .vt-aviso__frase[data-foi="true"] {
+    transform: none;
+    transition: opacity 200ms linear;
+  }
+}

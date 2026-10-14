@@ -58,7 +58,7 @@ export default function CatalogoPecas({ pecas }: { pecas: Peca[] }) {
             {c.rotulo}
           </button>
         ))}
-        <span aria-hidden className="mx-2 hidden h-6 w-px bg-ouro/30 sm:block" />
+        <span aria-hidden className="mx-2 hidden h-6 w-px bg-cinza/30 sm:block" />
         {STATUS.map((s) => (
           <button
             key={s.valor}
@@ -74,17 +74,17 @@ export default function CatalogoPecas({ pecas }: { pecas: Peca[] }) {
       </div>
 
       {filtradas.length === 0 ? (
-        <div className="mt-16 max-w-md border-l border-ouro/40 py-10 pl-6 sm:pl-10">
-          <p className="font-display text-3xl leading-snug">
+        <div className="mt-16 max-w-md border-l border-cinza/40 py-10 pl-6 sm:pl-10">
+          <p className="text-3xl font-semibold tracking-tight leading-snug">
             Nada aqui agora.
           </p>
-          <p className="font-marker mt-3 -rotate-1 text-xl text-rosa">
+          <p className="font-marker mt-3 -rotate-1 text-xl text-magenta">
             toda peça é única e algumas já foram.
           </p>
           <Cta
             cta="catalogo-vazio-encomendar"
             href="/#encomenda"
-            className="btn-ambar mt-8"
+            className="btn-ciano mt-8"
           >
             Encomendar uma peça <span aria-hidden>→</span>
           </Cta>

@@ -1,0 +1,45 @@
+/* ── a ficha de encomenda em modal (14/10/2026) ──────────────────
+   uma caixa só, até 32rem, no meio da tela; a ficha é curta e cabe sem
+   rolar (se a tela for baixa, ela rola por dentro). */
+.vt-modal {
+  width: min(32rem, calc(100% - 2rem));
+  max-width: none;
+  max-height: calc(100svh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--cinza) 30%, transparent);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--preto);
+  color: var(--osso);
+}
+.vt-modal:focus {
+  outline: none;
+}
+.vt-modal::backdrop {
+  background: rgba(8, 6, 5, 0.78);
+  backdrop-filter: blur(4px);
+}
+.vt-modal[open] {
+  animation: vt-modal-entra 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.vt-modal[open]::backdrop {
+  animation: vt-modal-fundo 260ms ease-out;
+}
+@keyframes vt-modal-entra {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+}
+@keyframes vt-modal-fundo {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vt-modal[open],
+  .vt-modal[open]::backdrop {
+    animation: none;
+  }
+}

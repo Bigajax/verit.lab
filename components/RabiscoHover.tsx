@@ -7,7 +7,7 @@ export default function RabiscoHover() {
       viewBox="0 0 300 14"
       fill="none"
       preserveAspectRatio="none"
-      className="pointer-events-none absolute inset-x-0 bottom-1.5 h-1.5 w-full text-rosa opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+      className="pointer-events-none absolute inset-x-0 bottom-1.5 h-1.5 w-full text-magenta opacity-0 transition-opacity duration-150 group-hover:opacity-100"
     >
       <path
         d="M4 9 C 60 3, 150 12, 296 5"

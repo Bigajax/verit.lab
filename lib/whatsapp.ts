@@ -41,27 +41,16 @@ export const waPecaVendida = (peca: Pick<Peca, "nome" | "slug">) =>
     ].join("\n"),
   );
 
+// A encomenda desde 14/10/2026: só o tipo (opcional) e a ideia. O resto
+// (onde vai ficar, tamanho, prazo) a vérít pergunta na conversa.
 export type Encomenda = {
   tipo: string;
   ideia: string;
-  local: string;
-  inspiracao: string;
-  nome: string;
 };
 
 export function waEncomenda(e: Encomenda) {
-  const linhas = [
-    "Oi, vérít! 🖤",
-    "Preenchi a ficha na galeria e quero uma peça única, feita pra mim:",
-    "",
-    "*Ficha de encomenda*",
-    `✦ Tipo de peça: ${e.tipo}`,
-    `✦ Frase ou ideia: ${e.ideia}`,
-    `✦ Onde vai ficar: ${e.local}`,
-  ];
-  if (e.inspiracao.trim())
-    linhas.push(`✦ Peça que inspirou: ${e.inspiracao}`);
-  if (e.nome.trim()) linhas.push(`✦ Nome: ${e.nome}`);
-  linhas.push("", "Bora criar a minha?");
+  const linhas = ["Oi, vérít! 🖤", "Quero encomendar uma peça única.", ""];
+  if (e.tipo) linhas.push(`*Tipo:* ${e.tipo}`);
+  linhas.push(`*Ideia:* ${e.ideia}`);
   return waLink(linhas.join("\n"));
 }

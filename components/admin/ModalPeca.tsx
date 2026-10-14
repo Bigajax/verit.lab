@@ -39,13 +39,13 @@ export default function ModalPeca({
       onClick={aoFechar}
     >
       <div
-        className="relative flex w-full flex-col overflow-y-auto bg-preto sm:max-h-[92dvh] sm:max-w-2xl sm:border sm:border-ouro/40"
+        className="relative flex w-full flex-col overflow-y-auto bg-preto sm:max-h-[92dvh] sm:max-w-2xl sm:border sm:border-cinza/40"
         onClick={(ev) => ev.stopPropagation()}
       >
         <button
           type="button"
           aria-label="Fechar"
-          className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center border border-osso/25 text-xl text-osso/70 hover:border-ambar hover:text-ambar"
+          className="absolute right-3 top-3 z-20 flex h-11 w-11 items-center justify-center border border-osso/25 text-xl text-osso/70 hover:border-ciano hover:text-ciano"
           onClick={aoFechar}
         >
           ×

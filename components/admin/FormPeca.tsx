@@ -58,7 +58,7 @@ function Rotulo({
 }) {
   return (
     <span className="eyebrow">
-      <span className="mr-2 font-bold text-rosa">{n}</span>
+      <span className="mr-2 font-bold text-magenta">{n}</span>
       {children}
       {opcional && (
         <span className="ml-1 normal-case tracking-normal opacity-60">
@@ -228,7 +228,7 @@ export default function FormPeca({
             href={`/pecas/${inicial.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
+            className="eyebrow inline-flex min-h-11 items-center hover:text-ciano"
           >
             Ver no site →
           </a>
@@ -253,12 +253,12 @@ export default function FormPeca({
                   setArrastando(null);
                 }}
                 className={`relative aspect-[4/5] cursor-grab overflow-hidden border ${
-                  i === 0 ? "border-ambar" : "border-ouro/25"
+                  i === 0 ? "border-ciano" : "border-cinza/25"
                 }`}
               >
                 <Image src={foto.url} alt="" fill sizes="120px" className="object-cover" />
                 {i === 0 && (
-                  <span className="absolute left-0 top-0 bg-ambar px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-widest text-preto">
+                  <span className="absolute left-0 top-0 bg-ciano px-1.5 py-0.5 text-[0.55rem] font-bold uppercase tracking-widest text-preto">
                     capa
                   </span>
                 )}
@@ -266,7 +266,7 @@ export default function FormPeca({
                   <button
                     type="button"
                     aria-label="Mover para a esquerda"
-                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-ambar disabled:opacity-30"
+                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-ciano disabled:opacity-30"
                     disabled={i === 0}
                     onClick={() => moverFoto(i, i - 1)}
                   >
@@ -275,7 +275,7 @@ export default function FormPeca({
                   <button
                     type="button"
                     aria-label="Excluir foto"
-                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-rosa"
+                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-magenta"
                     onClick={() => removerFoto(i)}
                   >
                     ×
@@ -283,7 +283,7 @@ export default function FormPeca({
                   <button
                     type="button"
                     aria-label="Mover para a direita"
-                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-ambar disabled:opacity-30"
+                    className="flex h-9 flex-1 items-center justify-center text-osso/80 hover:text-ciano disabled:opacity-30"
                     disabled={i === fotos.length - 1}
                     onClick={() => moverFoto(i, i + 1)}
                   >
@@ -295,7 +295,7 @@ export default function FormPeca({
             <button
               type="button"
               onClick={() => inputFotos.current?.click()}
-              className="flex aspect-[4/5] flex-col items-center justify-center gap-1 border border-dashed border-ouro/40 text-osso/55 transition-colors hover:border-ambar hover:text-ambar"
+              className="flex aspect-[4/5] flex-col items-center justify-center gap-1 border border-dashed border-cinza/40 text-osso/55 transition-colors hover:border-ciano hover:text-ciano"
             >
               <span className="text-2xl leading-none">+</span>
               <span className="text-[0.6rem] uppercase tracking-widest">
@@ -444,7 +444,7 @@ export default function FormPeca({
             <label className="grid flex-1 gap-2">
               <span className="text-xs text-osso/60">
                 Preço sem desconto{" "}
-                <span className="text-rosa">(aparece riscado)</span>
+                <span className="text-magenta">(aparece riscado)</span>
               </span>
               <input
                 className="campo"
@@ -555,20 +555,20 @@ export default function FormPeca({
       <div
         className={
           emModal
-            ? "sticky bottom-0 z-10 -mx-5 mt-8 border-t border-ouro/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur sm:-mx-8 sm:px-8 sm:pb-3"
-            : "fixed inset-x-0 bottom-0 z-30 border-t border-ouro/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur lg:static lg:mt-10 lg:border-0 lg:bg-transparent lg:p-0"
+            ? "sticky bottom-0 z-10 -mx-5 mt-8 border-t border-cinza/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur sm:-mx-8 sm:px-8 sm:pb-3"
+            : "fixed inset-x-0 bottom-0 z-30 border-t border-cinza/25 bg-preto/95 px-5 py-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur lg:static lg:mt-10 lg:border-0 lg:bg-transparent lg:p-0"
         }
       >
         <div className="mx-auto flex max-w-2xl items-center gap-4">
           <button
             type="submit"
-            className="btn-ambar flex-1 lg:flex-none"
+            className="btn-ciano flex-1 lg:flex-none"
             disabled={salvando || subindo > 0}
           >
             {salvando ? "Salvando…" : subindo > 0 ? "Subindo fotos…" : "Salvar"}
           </button>
           {erro && (
-            <p role="alert" className="text-sm font-semibold text-rosa">
+            <p role="alert" className="text-sm font-semibold text-magenta">
               {erro}
             </p>
           )}

@@ -52,7 +52,7 @@ export default async function PaginaPecas() {
       <section className="px-5 pt-14 sm:px-12 lg:px-20 lg:pt-20">
         <h1 className="font-extrabold uppercase leading-[0.9] tracking-tight">
           <span className="block text-6xl sm:text-7xl">Todas as</span>
-          <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ambar sm:text-6xl">
+          <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ciano sm:text-6xl">
             peças.
           </span>
         </h1>

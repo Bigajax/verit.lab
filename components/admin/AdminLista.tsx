@@ -21,9 +21,9 @@ const TOASTS: Record<string, string> = {
 };
 
 function corStatus(status: StatusPeca) {
-  if (status === "vendida") return "text-rosa";
-  if (status === "reservada") return "text-ouro";
-  return "text-ambar";
+  if (status === "vendida") return "text-magenta";
+  if (status === "reservada") return "text-cinza";
+  return "text-ciano";
 }
 
 // Lista do acervo — pensada para o celular, na oficina, com a mão suja
@@ -141,7 +141,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
         <button
           type="button"
           onClick={() => setModal({})}
-          className="btn-ambar hidden lg:inline-flex"
+          className="btn-ciano hidden lg:inline-flex"
         >
           + Nova peça
         </button>
@@ -178,10 +178,10 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
           return (
             <li
               key={peca.id}
-              className="border border-ouro/25 bg-osso/[0.03] p-3 sm:p-4"
+              className="border border-cinza/25 bg-osso/[0.03] p-3 sm:p-4"
             >
               <div className="flex items-center gap-4">
-                <div className="relative h-20 w-16 shrink-0 overflow-hidden border border-ouro/25">
+                <div className="relative h-20 w-16 shrink-0 overflow-hidden border border-cinza/25">
                   {foto ? (
                     <Image
                       src={foto.url}
@@ -198,7 +198,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-bold uppercase tracking-[0.1em]">
-                    <span className="mr-2 text-ambar">{peca.numero}</span>
+                    <span className="mr-2 text-ciano">{peca.numero}</span>
                     {peca.nome}
                   </p>
                   <p className="mt-1 text-xs text-osso/55">
@@ -206,7 +206,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
                     {peca.preco != null &&
                       ` · R$ ${peca.preco.toLocaleString("pt-BR")}`}
                     {temDesconto(peca) && (
-                      <span className="ml-1.5 font-bold uppercase tracking-widest text-rosa">
+                      <span className="ml-1.5 font-bold uppercase tracking-widest text-magenta">
                         promo
                       </span>
                     )}
@@ -226,32 +226,32 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
                   onClick={() => alternarVendida(peca)}
                   className={`min-h-14 shrink-0 border px-3 text-[0.65rem] font-bold uppercase tracking-[0.14em] transition-colors sm:px-4 ${
                     vendida
-                      ? "border-osso/30 text-osso/70 hover:border-ambar hover:text-ambar"
-                      : "border-rosa/60 text-rosa hover:bg-rosa hover:text-preto"
+                      ? "border-osso/30 text-osso/70 hover:border-ciano hover:text-ciano"
+                      : "border-magenta/60 text-magenta hover:bg-magenta hover:text-preto"
                   }`}
                 >
                   {vendida ? "Voltar ao acervo" : "Marcar vendida"}
                 </button>
               </div>
-              <div className="mt-3 flex gap-2 border-t border-ouro/15 pt-2">
+              <div className="mt-3 flex gap-2 border-t border-cinza/15 pt-2">
                 <button
                   type="button"
                   onClick={() => setModal({ peca })}
-                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/70 hover:text-ambar"
+                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/70 hover:text-ciano"
                 >
                   Editar
                 </button>
                 <button
                   type="button"
                   onClick={() => duplicar(peca)}
-                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/70 hover:text-ambar"
+                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/70 hover:text-ciano"
                 >
                   Duplicar
                 </button>
                 <button
                   type="button"
                   onClick={() => excluir(peca)}
-                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/45 hover:text-rosa"
+                  className="inline-flex min-h-11 flex-1 items-center justify-center text-xs font-semibold uppercase tracking-[0.14em] text-osso/45 hover:text-magenta"
                 >
                   Excluir
                 </button>
@@ -267,7 +267,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
           <button
             type="button"
             onClick={() => setModal({})}
-            className="text-ambar underline"
+            className="text-ciano underline"
           >
             Cadastrar a primeira
           </button>
@@ -280,7 +280,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
         <button
           type="button"
           onClick={() => setModal({})}
-          className="btn-ambar w-full shadow-lg"
+          className="btn-ciano w-full shadow-lg"
         >
           + Nova peça
         </button>
@@ -298,7 +298,7 @@ export default function AdminLista({ pecas: doServidor }: { pecas: Peca[] }) {
       {toast && (
         <p
           role="status"
-          className="fixed bottom-20 left-1/2 z-40 -translate-x-1/2 border border-ambar bg-preto px-5 py-3 text-sm font-semibold text-ambar shadow-lg lg:bottom-8"
+          className="fixed bottom-20 left-1/2 z-40 -translate-x-1/2 border border-ciano bg-preto px-5 py-3 text-sm font-semibold text-ciano shadow-lg lg:bottom-8"
         >
           {toast}
         </p>

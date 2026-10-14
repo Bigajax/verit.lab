@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# as fotos e as artes do gerador dos banners (só o public/hero vai ao ar)
+/banners

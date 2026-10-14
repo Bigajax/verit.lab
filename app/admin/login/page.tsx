@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+import logo from "@/public/marca/logo.png";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { supabaseBrowser } from "@/lib/supabase/client";
@@ -32,9 +34,9 @@ export default function LoginAdmin() {
 
   return (
     <main className="flex min-h-dvh items-center justify-center px-5">
-      <form onSubmit={entrar} className="w-full max-w-sm border border-ouro/30 bg-osso/[0.02]">
-        <div className="flex items-center justify-between gap-4 border-b border-ouro/30 px-6 py-4">
-          <p className="font-display text-xl italic">vérít.lab</p>
+      <form onSubmit={entrar} className="w-full max-w-sm border border-cinza/30 bg-osso/[0.02]">
+        <div className="flex items-center justify-between gap-4 border-b border-cinza/30 px-6 py-4">
+          <Image src={logo} alt="vérít.lab" className="h-8 w-auto" />
           <p className="eyebrow">painel</p>
         </div>
         <div className="grid gap-5 p-6">
@@ -61,11 +63,11 @@ export default function LoginAdmin() {
             />
           </label>
           {erro && (
-            <p role="alert" className="text-sm font-semibold text-rosa">
+            <p role="alert" className="text-sm font-semibold text-magenta">
               {erro}
             </p>
           )}
-          <button type="submit" className="btn-ambar w-full" disabled={entrando}>
+          <button type="submit" className="btn-ciano w-full" disabled={entrando}>
             {entrando ? "Entrando…" : "Entrar"}
           </button>
         </div>

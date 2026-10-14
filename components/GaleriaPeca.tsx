@@ -52,7 +52,7 @@ export default function GaleriaPeca({
 
   if (imagens.length === 0) {
     return (
-      <div className="flex aspect-[4/5] items-center justify-center border border-ouro/25 bg-osso/[0.03]">
+      <div className="flex aspect-[4/5] items-center justify-center border border-cinza/25 bg-osso/[0.03]">
         <p className="font-marker -rotate-2 text-2xl text-osso/40">sem foto</p>
       </div>
     );
@@ -95,7 +95,7 @@ export default function GaleriaPeca({
               <span
                 key={img.id}
                 className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                  i === atual ? "bg-ambar" : "bg-osso/25"
+                  i === atual ? "bg-ciano" : "bg-osso/25"
                 }`}
               />
             ))}
@@ -108,7 +108,7 @@ export default function GaleriaPeca({
         <button
           type="button"
           aria-label="Ampliar foto"
-          className="relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden border border-ouro/25 bg-osso/[0.03]"
+          className="relative block aspect-[4/5] w-full cursor-zoom-in overflow-hidden border border-cinza/25 bg-osso/[0.03]"
           onClick={() => setAmpliada(true)}
         >
           <Image
@@ -130,8 +130,8 @@ export default function GaleriaPeca({
                 aria-current={i === atual}
                 className={`relative h-20 w-16 overflow-hidden border transition-colors ${
                   i === atual
-                    ? "border-ambar"
-                    : "border-ouro/25 hover:border-ouro/60"
+                    ? "border-ciano"
+                    : "border-cinza/25 hover:border-cinza/60"
                 }`}
                 onClick={() => setAtual(i)}
               >
@@ -172,7 +172,7 @@ export default function GaleriaPeca({
           <button
             type="button"
             aria-label="Fechar"
-            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center border border-osso/30 text-2xl text-osso hover:border-ambar hover:text-ambar"
+            className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center border border-osso/30 text-2xl text-osso hover:border-ciano hover:text-ciano"
             onClick={() => setAmpliada(false)}
           >
             ×
@@ -182,7 +182,7 @@ export default function GaleriaPeca({
               <button
                 type="button"
                 aria-label="Foto anterior"
-                className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-osso/30 text-osso hover:border-ambar hover:text-ambar sm:left-6"
+                className="absolute left-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-osso/30 text-osso hover:border-ciano hover:text-ciano sm:left-6"
                 onClick={(ev) => {
                   ev.stopPropagation();
                   navegar(-1);
@@ -193,7 +193,7 @@ export default function GaleriaPeca({
               <button
                 type="button"
                 aria-label="Próxima foto"
-                className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-osso/30 text-osso hover:border-ambar hover:text-ambar sm:right-6"
+                className="absolute right-2 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center border border-osso/30 text-osso hover:border-ciano hover:text-ciano sm:right-6"
                 onClick={(ev) => {
                   ev.stopPropagation();
                   navegar(1);

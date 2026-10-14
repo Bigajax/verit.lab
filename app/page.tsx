@@ -1,17 +1,17 @@
 import Image from "next/image";
-import Link from "next/link";
 import Cta from "@/components/Cta";
 import Reveal from "@/components/Reveal";
-import FormEncomenda from "@/components/FormEncomenda";
-import HeaderFixo from "@/components/HeaderFixo";
+import SiteHeader from "@/components/SiteHeader";
+import Campanha from "@/components/Campanha";
+import Beneficios from "@/components/Beneficios";
+import BannerCriacao from "@/components/BannerCriacao";
+import { banners } from "@/data/banners";
 import PecaCard from "@/components/PecaCard";
-import RabiscoHover from "@/components/RabiscoHover";
 import SiteFooter from "@/components/SiteFooter";
 import { getDestaques } from "@/lib/pecas.server";
 import { site } from "@/data/site.config";
 
 // Imports estáticos das fotos de ambiente: blur automático + zero CLS.
-import fotoSala from "@/public/images/ambiente/hero-sala.webp";
 import fotoBandeja from "@/public/images/ambiente/bandeja.jpg";
 import fotoPatos from "@/public/images/ambiente/patos.jpg";
 import fotoEstudio from "@/public/images/ambiente/estudio.jpg";
@@ -29,144 +29,11 @@ export default async function Home() {
 
   return (
     <main className="overflow-x-clip">
-      {/* header fixo: transparente no topo, fundo escuro ao rolar */}
-      <HeaderFixo>
-          <p className="shrink-0 font-display text-2xl italic">vérít.lab</p>
-          <nav
-            aria-label="Categorias"
-            className="hidden items-center gap-2.5 border border-ouro/40 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-osso/85 md:flex"
-          >
-            <Link href="/pecas?categoria=quadro" className="hover:text-ambar">
-              Art
-            </Link>
-            <span className="text-ambar">/</span>
-            <Link href="/pecas?categoria=espelho" className="hover:text-ambar">
-              Mirrors
-            </Link>
-            <span className="text-ambar">/</span>
-            <Link href="/pecas?categoria=objeto" className="hover:text-ambar">
-              Objects
-            </Link>
-            <span className="text-ambar">·</span>
-            <span>{site.cidade}</span>
-          </nav>
-          <nav aria-label="Principal" className="flex items-center gap-3 sm:gap-6">
-            <Link
-              href="/pecas"
-              className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
-            >
-              Peças
-              <RabiscoHover />
-            </Link>
-            <a
-              href="#encomenda"
-              className="eyebrow group relative inline-flex min-h-11 items-center text-osso/85 hover:text-ambar"
-            >
-              Encomendar
-              <RabiscoHover />
-            </a>
-            {/* acesso do dono: /admin/login digitado direto */}
-          </nav>
-      </HeaderFixo>
+      <SiteHeader />
 
-      {/* ── 01. Hero: a sala inteira, uma frase e um botão, no centro ── */}
-      {/* mobile: 100svh (sem pulo da barra do Safari) menos o header em fluxo */}
-      <section
-        id="hero"
-        className="relative flex min-h-[calc(100svh-4.75rem)] flex-col items-center justify-center lg:min-h-[92vh]"
-      >
-        {/* foto de ponta a ponta. -top: sobe atrás do header transparente.
-            hero-sala.webp: o post da sala já sem a faixa dos watermarks, limpo do
-            ruído do Instagram e ampliado para 2160 px (a original tem só 1080) */}
-        <div className="absolute inset-x-0 -top-[4.75rem] bottom-0 z-0">
-          <Image
-            src={fotoSala}
-            alt="Sala escura da vérít.lab com quadros e espelhos grafitados iluminados"
-            fill
-            preload
-            quality={90}
-            placeholder="blur"
-            sizes="100vw"
-            className="object-cover object-[50%_55%]"
-          />
-          {/* escurece por igual e mais no miolo: a frase lê sobre os quadros acesos */}
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(ellipse 70% 55% at 50% 52%, rgba(16,13,10,0.72) 0%, rgba(16,13,10,0.45) 60%, rgba(16,13,10,0.35) 100%)",
-            }}
-          />
-          {/* topo e pé: o header lê no alto, e a foto se funde no preto da faixa */}
-          <div
-            aria-hidden
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to bottom, #100d0a 0%, rgba(16,13,10,0.6) 14%, transparent 32%, transparent 72%, #100d0a 100%)",
-            }}
-          />
-        </div>
-
-        <div className="relative z-10 flex w-full flex-col items-center px-5 text-center sm:px-12">
-          <h1 className="inline-block -rotate-1">
-            <span className="font-marker block text-[clamp(2.4rem,10vw,5.2rem)] leading-none text-ambar">
-              Nada aqui se repete.
-            </span>
-            <svg
-              aria-hidden
-              className="mt-2 block h-3 w-full text-ambar lg:h-4"
-              viewBox="0 0 300 14"
-              fill="none"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M4 9 C 60 3, 150 12, 296 5"
-                stroke="currentColor"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-            </svg>
-          </h1>
-          <Cta
-            cta="hero-ver-pecas"
-            href="/pecas"
-            className="btn-ambar mt-9 w-full max-w-xs -rotate-1 py-3.5! transition-all! duration-200 hover:rotate-0 hover:brightness-110 sm:w-auto sm:py-4!"
-          >
-            Ver peças <span aria-hidden>→</span>
-          </Cta>
-        </div>
-      </section>
-
-      {/* ── Faixa rotativa — taglines do catálogo ───────────────── */}
-      <div
-        aria-hidden
-        className="relative -rotate-1 overflow-hidden bg-rosa py-3"
-        style={{ width: "104%", marginLeft: "-2%" }}
-      >
-        <div className="flex w-max animate-[faixa_32s_linear_infinite] motion-reduce:animate-none">
-          {[0, 1].map((k) => (
-            <p
-              key={k}
-              className="flex shrink-0 items-center text-sm font-bold uppercase tracking-[0.2em] text-preto"
-            >
-              {[
-                "this is not just decor.",
-                "made to be noticed.",
-                "your wall deserves attitude.",
-                "art doesn't need permission.",
-                "one piece. new energy.",
-              ].map((frase) => (
-                <span key={frase} className="flex items-center">
-                  <span className="px-5">{frase}</span>
-                  <span aria-hidden>/</span>
-                </span>
-              ))}
-            </p>
-          ))}
-        </div>
-      </div>
+      {/* ── 01. A campanha: três banners, como no molde do estúdio ── */}
+      <Campanha slides={banners} />
+      <Beneficios />
 
       {/* ── 02. Galeria — peças únicas ──────────────────────────── */}
       <section id="pecas" className="scroll-mt-10 px-5 pt-24 sm:px-12 lg:px-20 lg:pt-36">
@@ -176,7 +43,7 @@ export default async function Home() {
           <div className="mb-7 lg:sticky lg:top-16 lg:mb-0 lg:self-start">
             <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
               <span className="block text-6xl sm:text-7xl">Peças</span>
-              <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ambar sm:text-6xl">
+              <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ciano sm:text-6xl">
                 únicas.
               </span>
             </h2>
@@ -190,7 +57,7 @@ export default async function Home() {
             <svg
               aria-hidden
               viewBox="0 0 120 120"
-              className="mt-12 hidden w-40 animate-[girar_20s_linear_infinite] text-rosa motion-reduce:animate-none lg:block"
+              className="mt-12 hidden w-40 animate-[girar_20s_linear_infinite] text-magenta motion-reduce:animate-none lg:block"
             >
               <defs>
                 <path id="circ" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
@@ -223,14 +90,14 @@ export default async function Home() {
               <Cta
                 cta="galeria-acervo"
                 href="/pecas"
-                className="btn-outline -rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto!"
+                className="btn-outline -rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ciano hover:border-ciano! hover:text-preto!"
               >
                 Ver acervo completo <span aria-hidden>→</span>
               </Cta>
               <Cta
                 cta="galeria-encomendar"
                 href="#encomenda"
-                className="btn-outline rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ambar hover:border-ambar! hover:text-preto!"
+                className="btn-outline rotate-1 transition-all! duration-200 hover:rotate-0 hover:bg-ciano hover:border-ciano! hover:text-preto!"
               >
                 Encomendar uma peça <span aria-hidden>→</span>
               </Cta>
@@ -243,14 +110,14 @@ export default async function Home() {
       <section className="relative px-5 py-28 sm:px-12 lg:px-20 lg:py-40">
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <div className="relative z-10 lg:col-span-7">
-            <h2 className="font-marker -rotate-1 text-[15vw] leading-[1.05] text-ambar sm:text-7xl lg:text-8xl">
+            <h2 className="font-marker -rotate-1 text-[15vw] leading-[1.05] text-ciano sm:text-7xl lg:text-8xl">
               Nothing
               <br />
               repeat.
             </h2>
             <svg
               aria-hidden
-              className="mt-2 h-3 w-44 text-ambar sm:w-60"
+              className="mt-2 h-3 w-44 text-ciano sm:w-60"
               viewBox="0 0 300 14"
               fill="none"
               preserveAspectRatio="none"
@@ -270,7 +137,7 @@ export default async function Home() {
                   viewBox="0 0 220 74"
                   fill="none"
                   preserveAspectRatio="none"
-                  className="absolute inset-0 h-full w-full text-rosa"
+                  className="absolute inset-0 h-full w-full text-magenta"
                 >
                   <path
                     d="M28 37 C 24 14, 120 6, 186 18 C 214 24, 210 52, 150 62 C 90 70, 20 62, 18 44 C 17 34, 40 26, 60 24"
@@ -279,12 +146,12 @@ export default async function Home() {
                     strokeLinecap="round"
                   />
                 </svg>
-                <span className="font-marker relative -rotate-2 inline-block text-2xl text-rosa sm:text-3xl">
+                <span className="font-marker relative -rotate-2 inline-block text-2xl text-magenta sm:text-3xl">
                   uma vez só.
                 </span>
               </span>
             </p>
-            <p className="font-display mt-8 text-2xl leading-snug sm:text-3xl">
+            <p className="mt-8 text-2xl font-semibold tracking-tight leading-snug sm:text-3xl">
               Uma peça. Uma história. Uma vez.
             </p>
             <p className="mt-4 max-w-sm text-osso/70">
@@ -328,55 +195,15 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* ── 04. Sob encomenda — você pensa, a gente cria ────────── */}
-      <section
-        id="encomenda"
-        className="scroll-mt-10 border-y border-ouro/25 bg-osso/[0.03]"
-      >
-        <div className="grid gap-14 px-4 py-16 sm:px-12 sm:py-24 lg:px-20 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-          <div>
-            <p className="eyebrow mb-4">Peças sob encomenda</p>
-            <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
-              <span className="block text-5xl sm:text-6xl">Você</span>
-              <span className="block text-5xl sm:text-6xl">pensa.</span>
-              <span className="font-marker block -rotate-1 pt-3 text-4xl font-normal normal-case tracking-normal text-rosa sm:text-5xl">
-                a gente cria.
-              </span>
-            </h2>
-            <p className="mt-7 max-w-sm text-osso/70">
-              Você escolhe a frase, a referência ou a ideia. A vérít transforma
-              isso em um objeto único.
-            </p>
-            <ol className="mt-10 space-y-4 text-osso/70">
-              <li>
-                <strong className="mr-2 text-rosa">01</strong>
-                <strong className="text-osso">sua ideia.</strong> Toda peça
-                começa numa conversa.
-              </li>
-              <li>
-                <strong className="mr-2 text-rosa">02</strong>
-                <strong className="text-osso">criação autoral.</strong> Moldura,
-                grafite e acabamento à mão.
-              </li>
-              <li>
-                <strong className="mr-2 text-rosa">03</strong>
-                <strong className="text-osso">entrega.</strong> Assinada, única,
-                sem cópia.
-              </li>
-            </ol>
-            {/* Tarja de valor mínimo removida até a vérít definir o número real
-                (nenhum placeholder pode ir pro ar). */}
-          </div>
-          <FormEncomenda />
-        </div>
-      </section>
+      {/* ── 04. Sob encomenda: o banner de criação abre a ficha (modal) ── */}
+      <BannerCriacao />
 
       {/* ── 05. Essência — curta ────────────────────────────────── */}
       <section className="px-5 py-16 sm:px-12 sm:py-24 lg:px-20 lg:py-32">
         <Reveal>
-          <div className="max-w-2xl border-l border-ouro/40 pl-6 sm:pl-10">
+          <div className="max-w-2xl border-l border-cinza/40 pl-6 sm:pl-10">
             <p className="eyebrow mb-6">Sobre a vérít</p>
-            <p className="font-display text-xl leading-[1.45] sm:text-4xl sm:leading-snug">
+            <p className="text-xl font-semibold tracking-tight leading-[1.45] sm:text-4xl sm:leading-snug">
               Em um mundo de objetos produzidos em massa, escolhemos fazer
               diferente. Criamos peças para quem procura o que não se encontra
               em qualquer lugar.
@@ -390,7 +217,7 @@ export default async function Home() {
         <div className="mb-12 flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="eyebrow mb-4">O laboratório</p>
-            <h2 className="font-display text-4xl sm:text-5xl">
+            <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl">
               {site.instagramHandle}
             </h2>
           </div>
@@ -398,7 +225,7 @@ export default async function Home() {
             cta="bastidores-instagram"
             href={site.instagram}
             novaAba
-            className="eyebrow inline-flex min-h-11 items-center hover:text-ambar"
+            className="eyebrow inline-flex min-h-11 items-center hover:text-ciano"
           >
             ver o que está acontecendo →
           </Cta>
@@ -456,17 +283,17 @@ export default async function Home() {
 
       {/* ── 07. CTA final + FAQ ─────────────────────────────────── */}
       <section className="px-5 pb-24 sm:px-12 lg:px-20">
-        <div className="border-t border-ouro/25 pt-16 lg:grid lg:grid-cols-2 lg:gap-16">
+        <div className="border-t border-cinza/25 pt-16 lg:grid lg:grid-cols-2 lg:gap-16">
           <div>
             <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
               <span className="block text-5xl sm:text-6xl">Encontrou</span>
-              <span className="font-marker block -rotate-1 pt-2 text-4xl font-normal normal-case tracking-normal text-ambar sm:text-5xl">
+              <span className="font-marker block -rotate-1 pt-2 text-4xl font-normal normal-case tracking-normal text-ciano sm:text-5xl">
                 a sua?
               </span>
             </h2>
             <p className="mt-5 text-osso/70">Peça única. Uma vez só.</p>
             <div className="mt-9 flex flex-wrap gap-4">
-              <Cta cta="final-encomendar" href="#encomenda" className="btn-ambar">
+              <Cta cta="final-encomendar" href="#encomenda" className="btn-ciano">
                 Montar minha peça
               </Cta>
               <Cta cta="final-ver-pecas" href="/pecas" className="btn-outline">
@@ -489,10 +316,10 @@ export default async function Home() {
                 a: "Limpe com pano seco e macio, sem produtos abrasivos. Evite sol direto e umidade: grafite e folha dourada gostam de luz indireta.",
               },
             ].map((item) => (
-              <details key={item.q} className="group border-b border-ouro/25 pb-2">
+              <details key={item.q} className="group border-b border-cinza/25 pb-2">
                 <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between py-4 font-medium">
                   {item.q}
-                  <span className="text-ouro transition-transform group-open:rotate-45">
+                  <span className="text-cinza transition-transform group-open:rotate-45">
                     +
                   </span>
                 </summary>
