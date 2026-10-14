@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* o painel vem do pacote (14/10/2026): o Tailwind 4 não olha o node_modules, e sem isto o painel sai sem estilo */
+@source "../node_modules/@vitrine/plataforma";
 @import "./topo.css";
 @import "./modal.css";
 

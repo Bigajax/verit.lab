@@ -99,7 +99,7 @@ export default function SiteHeader() {
         <Link href="/" className="vt-topo__marca">
           {/* a logo de outubro de 2026, recortada da foto do perfil
               (scripts/recortar-logo.cjs) */}
-          <Image src={logo} alt="vérít.lab, página inicial" preload className="vt-topo__logo" />
+          <Image src={logo} alt="vérít.lab, página inicial" priority className="vt-topo__logo" />
         </Link>
 
         <nav aria-label="Principal" className="vt-topo__menu">

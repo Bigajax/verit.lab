@@ -65,10 +65,10 @@ export default function Campanha({ slides }: { slides: Banner[] }) {
               {/* cada arte na própria caixa: o CSS esconde a caixa que não
                   vale naquela largura */}
               <span className="camp__arte">
-                <Image src={s.foto} alt={s.alt} fill preload={i === 0} quality={86} sizes="100vw" className="object-cover" />
+                <Image src={s.foto} alt={s.alt} fill priority={i === 0} quality={86} sizes="100vw" className="object-cover" />
               </span>
               <span className="camp__arte-celular">
-                <Image src={s.celular} alt={s.alt} fill preload={i === 0} quality={86} sizes="100vw" className="object-cover" />
+                <Image src={s.celular} alt={s.alt} fill priority={i === 0} quality={86} sizes="100vw" className="object-cover" />
               </span>
             </div>
             <div className="camp__texto">

@@ -82,7 +82,7 @@ export default function GaleriaPeca({
                 src={img.url}
                 alt={img.alt ?? nome}
                 fill
-                preload={i === 0}
+                priority={i === 0}
                 sizes="100vw"
                 className="object-cover"
               />
@@ -115,7 +115,7 @@ export default function GaleriaPeca({
             src={imagens[atual]?.url ?? imagens[0].url}
             alt={imagens[atual]?.alt ?? nome}
             fill
-            preload
+            priority
             sizes="(min-width: 1024px) 55vw, 100vw"
             className="object-cover"
           />
