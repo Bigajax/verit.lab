@@ -580,3 +580,95 @@ section[id] {
     transition: opacity 200ms linear;
   }
 }
+
+/* ── a faixa das frases das obras (14/10/2026) ──
+   ciano da logo, levemente torta, as frases no pincel e a estrela da logo
+   entre elas. Anda sozinha; com movimento reduzido anda bem devagar. */
+.vl-frases {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  width: 104%;
+  margin: -0.4rem 0 -0.4rem -2%;
+  padding: 0.6rem 0 0.5rem;
+  background: var(--ciano);
+  color: var(--preto);
+  transform: rotate(-1.2deg);
+}
+.vl-frases__trilho {
+  display: flex;
+  width: max-content;
+  animation: faixa 70s linear infinite;
+}
+@media (hover: hover) and (pointer: fine) {
+  .vl-frases:hover .vl-frases__trilho {
+    animation-play-state: paused;
+  }
+}
+.vl-frases__fila {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.vl-frases__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-right: 1.25rem;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.vl-frases__estrela {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+@media (min-width: 900px) {
+  .vl-frases__item {
+    gap: 1.75rem;
+    padding-right: 1.75rem;
+    font-size: 2.125rem;
+  }
+  .vl-frases__estrela {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vl-frases__trilho {
+    animation-duration: 240s;
+  }
+}
+
+/* ── o gancho da estrela nos títulos de pincel ──
+   como na logo, a estrela morde o fim da última palavra */
+.vl-gancho {
+  position: relative;
+  display: inline-block;
+  padding-right: 0.75em;
+}
+/* grande e encostada: a ponta de baixo à esquerda entra no ponto final */
+.vl-gancho__estrela {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.12em;
+  width: 1.12em;
+  height: 1.12em;
+  color: var(--ciano);
+  pointer-events: none;
+}
+
+/* a estrela parada no meio do carimbo que gira */
+.vl-carimbo {
+  position: relative;
+}
+.vl-carimbo__estrela {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34%;
+  height: 34%;
+  transform: translate(-50%, -50%);
+  color: var(--ciano);
+}

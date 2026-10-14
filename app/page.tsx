@@ -4,6 +4,8 @@ import Reveal from "@/components/Reveal";
 import SiteHeader from "@/components/SiteHeader";
 import Campanha from "@/components/Campanha";
 import Beneficios from "@/components/Beneficios";
+import FaixaFrases from "@/components/FaixaFrases";
+import Estrela from "@/components/Estrela";
 import BannerCriacao from "@/components/BannerCriacao";
 import { banners } from "@/data/banners";
 import PecaCard from "@/components/PecaCard";
@@ -33,6 +35,7 @@ export default async function Home() {
 
       {/* ── 01. A campanha: três banners, como no molde do estúdio ── */}
       <Campanha slides={banners} />
+      <FaixaFrases />
       <Beneficios />
 
       {/* ── 02. Galeria — peças únicas ──────────────────────────── */}
@@ -44,7 +47,10 @@ export default async function Home() {
             <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
               <span className="block text-6xl sm:text-7xl">Peças</span>
               <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ciano sm:text-6xl">
-                únicas.
+                <span className="vl-gancho">
+                  únicas.
+                  <Estrela gasta className="vl-gancho__estrela" />
+                </span>
               </span>
             </h2>
             <p className="mt-6 max-w-56 text-osso/70">
@@ -53,11 +59,12 @@ export default async function Home() {
             <p className="eyebrow mt-4 hidden max-w-52 text-osso/55 lg:block">
               quantidade limitada · consulte disponibilidade
             </p>
-            {/* carimbo nothing repeat */}
+            {/* carimbo nothing repeat, com a estrela da logo parada no meio */}
+            <div className="vl-carimbo mt-12 hidden w-40 lg:block">
             <svg
               aria-hidden
               viewBox="0 0 120 120"
-              className="mt-12 hidden w-40 animate-[girar_20s_linear_infinite] text-magenta motion-reduce:animate-none lg:block"
+              className="w-full animate-[girar_20s_linear_infinite] text-magenta motion-reduce:animate-none"
             >
               <defs>
                 <path id="circ" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0" />
@@ -66,6 +73,8 @@ export default async function Home() {
                 <textPath href="#circ">nothing repeat · nothing repeat ·</textPath>
               </text>
             </svg>
+            <Estrela gasta className="vl-carimbo__estrela" />
+            </div>
           </div>
 
           {/* cards — overlay 4:5; 2 colunas no mobile (1ª peça em largura

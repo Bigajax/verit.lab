@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Estrela from "@/components/Estrela";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Cta from "@/components/Cta";
@@ -258,7 +259,10 @@ export default async function PaginaPeca({ params }: PageProps<"/pecas/[slug]">)
           <h2 className="font-extrabold uppercase leading-[0.9] tracking-tight">
             <span className="block text-4xl sm:text-5xl">Outras</span>
             <span className="font-marker block -rotate-1 pt-2 text-3xl font-normal normal-case tracking-normal text-ciano sm:text-4xl">
-              peças.
+              <span className="vl-gancho">
+                peças.
+                <Estrela gasta className="vl-gancho__estrela" />
+              </span>
             </span>
           </h2>
           <div className="mt-10 grid grid-cols-2 gap-x-2.5 gap-y-3.5 sm:gap-6 lg:grid-cols-3">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Estrela from "@/components/Estrela";
 import { Suspense } from "react";
 import CatalogoPecas from "@/components/CatalogoPecas";
 import FechamentoCta from "@/components/FechamentoCta";
@@ -53,7 +54,10 @@ export default async function PaginaPecas() {
         <h1 className="font-extrabold uppercase leading-[0.9] tracking-tight">
           <span className="block text-6xl sm:text-7xl">Todas as</span>
           <span className="font-marker block -rotate-1 pt-2 text-5xl font-normal normal-case tracking-normal text-ciano sm:text-6xl">
-            peças.
+            <span className="vl-gancho">
+              peças.
+              <Estrela gasta className="vl-gancho__estrela" />
+            </span>
           </span>
         </h1>
         <p className="mt-6 max-w-sm text-osso/70">
