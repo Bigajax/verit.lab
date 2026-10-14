@@ -5,13 +5,13 @@ import type { LojaConfig } from "@vitrine/plataforma/tipos-loja";
 /**
  * A VÉRÍT NO PACOTE (14/10/2026, o Rafael: "começa a implantar o molde do
  * painel nesta loja"). O painel inteiro vem do @vitrine/plataforma: Início,
- * Peças, Estoque, Pedidos, Desempenho, Ajuda e o contato. O admin antigo
+ * Peças, Desempenho, Ajuda e o contato. O admin antigo
  * (/admin) saiu e redireciona para /painel. As obras foram copiadas para as
  * tabelas do pacote com o MESMO id (supabase/rodar-painel-pacote.sql), e o
  * site lê de lá pela ponte (lib/pecas.server.ts).
  *
  * TODA OBRA É ÚNICA: o tamanho é "Único" e o estoque é 1. "Vendi" zera e a
- * obra aparece vendida; a reserva é o Separar do painel. O site não usa o
+ * obra aparece vendida; a reserva é o Separar do painel (com nome e prazo). O site não usa o
  * "última" do pacote (estoqueNoSite desligado): quem decide o que mostrar é
  * a ponte (disponível, reservada, vendida).
  *
@@ -49,7 +49,10 @@ export const loja: LojaConfig = {
   conteudo: { partes: PARTES, mapa: MAPA, variaveis: VARIAVEIS },
   opcoes: {
     estoque: true,
-    gestao: true,
+    /* o modo simples (14/10/2026, o Rafael): "Vendi / Chegou" na lista e o
+       Separar com nome e prazo; sem a tela Estoque nem a aba Pedidos, que são
+       de loja com estoque e pedido de vários itens */
+    gestao: false,
     /* o site mostra disponível, reservada ou vendida; nunca "última" */
     estoqueNoSite: false,
     /* "Mais vendida" é a chave que põe a obra na home (o destaque) */
