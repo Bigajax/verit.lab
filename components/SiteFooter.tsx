@@ -14,6 +14,12 @@ export default function SiteFooter() {
             nothing repeat.
           </p>
           <p className="eyebrow mt-3 text-osso/55">{site.cidade} · PR</p>
+          <p className="mt-3 text-xs text-osso/55">
+            vitrine por{" "}
+            <a href="https://rafaelrazeira.com.br/vitrine-digital" target="_blank" rel="noopener" className="underline-offset-4 hover:text-ciano hover:underline">
+              Rafael Razeira Estúdio
+            </a>
+          </p>
         </div>
         <nav className="flex gap-8">
           {/* o @ vive aqui (e na seção do laboratório, na home) */}
