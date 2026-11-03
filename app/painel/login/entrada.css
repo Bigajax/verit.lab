@@ -92,13 +92,13 @@
   letter-spacing: -0.02em;
   color: var(--pn-tinta);
 }
-/* o botão do painel no preto da galeria, com a sombra magenta */
+/* o botão do painel no preto da galeria. Só a cor: a forma (pílula, 48px,
+   sem sombra) é da plataforma desde a v2.0. A sombra dura magenta de 4px era
+   do desenho antigo e, na pílula da v2.0.3, sairia como um degrau (03/11/2026) */
 .vl-entrada .pn-carimbo button {
-  min-height: 3rem;
   background: var(--vl-preto);
   color: #ffffff;
   border-color: var(--vl-preto);
-  box-shadow: 4px 4px 0 var(--vl-magenta);
 }
 @media (hover: hover) and (pointer: fine) {
   .vl-entrada .pn-carimbo button:hover:not(:disabled) {

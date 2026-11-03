@@ -118,7 +118,9 @@ body {
   font-size: 1rem;
 }
 
-.campo::placeholder {
+/* fora do painel: o painel é branco desde a v2.0 do pacote, e o osso a 42%
+   deixava a dica da busca de Peças invisível (03/11/2026) */
+.campo:not(.pn *)::placeholder {
   color: color-mix(in srgb, var(--osso) 42%, transparent);
 }
 

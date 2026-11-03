@@ -30,6 +30,10 @@ const nextConfig: NextConfig = {
       // o admin próprio deu lugar ao painel do pacote (14/10/2026)
       { source: "/admin", destination: "/painel", permanent: false },
       { source: "/admin/:caminho*", destination: "/painel", permanent: false },
+      // o painel do pacote aponta a peça para /produto/<slug> (o "Ver no site"
+      // depois de salvar, o link do Compartilhar, a Desempenho); a vérít usa
+      // /pecas/<slug>, com o mesmo slug (03/11/2026, v2.0.3)
+      { source: "/produto/:slug", destination: "/pecas/:slug", permanent: false },
     ];
   },
   images: {
